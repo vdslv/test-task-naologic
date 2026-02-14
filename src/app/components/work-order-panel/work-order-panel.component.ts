@@ -76,21 +76,12 @@ export class WorkOrderPanelComponent implements OnChanges {
         endDate: endDate
       });
     } else {
-      // Create mode - use initial start date or today
-      const startDate = this.initialStartDate
-        ? this.parseDate(this.initialStartDate)
-        : this.parseDate(new Date().toISOString().split('T')[0]);
-
-      // Default end date is start + 7 days
-      const endDateObj = new Date(this.initialStartDate || new Date());
-      endDateObj.setDate(endDateObj.getDate() + 7);
-      const endDate = this.parseDate(endDateObj.toISOString().split('T')[0]);
-
+      // Create mode - leave dates empty for user to select
       this.form.reset({
         name: '',
         status: 'open',
-        startDate: startDate,
-        endDate: endDate
+        startDate: null,
+        endDate: null
       });
     }
   }

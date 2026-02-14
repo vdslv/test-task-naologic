@@ -86,8 +86,19 @@
       padding-right: $padding-sm;
 
       .ng-arrow {
-        border-color: rgba(62, 64, 219, 1) transparent transparent;
+        border: none;
+        width: 8px;
+        height: 8px;
+        border-left: 2px solid rgba(62, 64, 219, 1);
+        border-bottom: 2px solid rgba(62, 64, 219, 1);
+        transform: rotate(-45deg);
+        margin-top: -4px;
       }
+    }
+
+    &.ng-select-opened .ng-arrow-wrapper .ng-arrow {
+      transform: rotate(135deg);
+      margin-top: 2px;
     }
 
     @include ng-select-dropdown-options;

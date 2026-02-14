@@ -46,8 +46,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'Consulting Inc',
       workCenterId: 'wc-001',
       status: 'complete',
-      startDate: formatDate(addDays(today, -45)),
-      endDate: formatDate(addDays(today, -15))
+      startDate: formatDate(addDays(today, -120)),
+      endDate: formatDate(addDays(today, -60))
     }
   },
   {
@@ -57,8 +57,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'Rodriques Electrics',
       workCenterId: 'wc-002',
       status: 'in-progress',
-      startDate: formatDate(addDays(today, -30)),
-      endDate: formatDate(addDays(today, 15))
+      startDate: formatDate(addDays(today, -45)),
+      endDate: formatDate(addDays(today, 30))
     }
   },
   {
@@ -68,8 +68,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'Konsulting Inc',
       workCenterId: 'wc-003',
       status: 'in-progress',
-      startDate: formatDate(addDays(today, -20)),
-      endDate: formatDate(addDays(today, 25))
+      startDate: formatDate(addDays(today, -30)),
+      endDate: formatDate(addDays(today, 45))
     }
   },
   {
@@ -79,8 +79,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'Compleks Systems',
       workCenterId: 'wc-003',
       status: 'in-progress',
-      startDate: formatDate(addDays(today, 30)),
-      endDate: formatDate(addDays(today, 75))
+      startDate: formatDate(addDays(today, 60)),
+      endDate: formatDate(addDays(today, 120))
     }
   },
   {
@@ -90,8 +90,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'McMarrow Distribution',
       workCenterId: 'wc-004',
       status: 'blocked',
-      startDate: formatDate(addDays(today, -10)),
-      endDate: formatDate(addDays(today, 45))
+      startDate: formatDate(addDays(today, -20)),
+      endDate: formatDate(addDays(today, 60))
     }
   },
   {
@@ -101,8 +101,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'Assembly Line Alpha',
       workCenterId: 'wc-005',
       status: 'open',
-      startDate: formatDate(addDays(today, 5)),
-      endDate: formatDate(addDays(today, 20))
+      startDate: formatDate(addDays(today, 10)),
+      endDate: formatDate(addDays(today, 70))
     }
   },
   {
@@ -112,8 +112,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'Quality Check Batch',
       workCenterId: 'wc-005',
       status: 'complete',
-      startDate: formatDate(addDays(today, -60)),
-      endDate: formatDate(addDays(today, -40))
+      startDate: formatDate(addDays(today, -90)),
+      endDate: formatDate(addDays(today, -30))
     }
   },
   {
@@ -123,8 +123,8 @@ export const WORK_ORDERS: WorkOrderDocument[] = [
       name: 'Maintenance Schedule',
       workCenterId: 'wc-001',
       status: 'open',
-      startDate: formatDate(addDays(today, 10)),
-      endDate: formatDate(addDays(today, 25))
+      startDate: formatDate(addDays(today, 30)),
+      endDate: formatDate(addDays(today, 90))
     }
   }
 ];
