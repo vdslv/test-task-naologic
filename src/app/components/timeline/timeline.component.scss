@@ -12,16 +12,15 @@
 // Header
 .timeline-header {
   padding: 20px $padding-xxl;
-  border-bottom: 1px solid $border-color;
 }
 
 .logo {
-  @include font-circular($font-size-md, 500);
+  @include font-circular($font-size-sm, 500);
   letter-spacing: 2px;
 
   .logo-nao {
     color: $primary-shade-2;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .logo-logic {

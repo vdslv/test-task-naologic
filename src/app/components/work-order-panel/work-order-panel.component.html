@@ -60,6 +60,7 @@
               readonly
               ngbDatepicker
               #endDatePicker="ngbDatepicker"
+              [navigation]="'select'"
               (click)="endDatePicker.toggle()"
               formControlName="endDate"
             />
@@ -81,6 +82,7 @@
               readonly
               ngbDatepicker
               #startDatePicker="ngbDatepicker"
+              [navigation]="'select'"
               (click)="startDatePicker.toggle()"
               formControlName="startDate"
             />
