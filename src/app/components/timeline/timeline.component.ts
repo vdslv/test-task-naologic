@@ -79,13 +79,16 @@ export class TimelineComponent {
 
   set currentTimescale(value: TimescaleType) {
     this.timelineService.setTimescale(value);
-    // Reset scroll to start when switching timescale
+    // Center scroll position so user can scroll both directions
     requestAnimationFrame(() => {
-      if (this.timelineContent?.nativeElement) {
-        this.timelineContent.nativeElement.scrollLeft = 0;
-      }
-      if (this.timelineHeader?.nativeElement) {
-        this.timelineHeader.nativeElement.scrollLeft = 0;
+      const content = this.timelineContent?.nativeElement;
+      const header = this.timelineHeader?.nativeElement;
+      if (content) {
+        const centerScroll = (content.scrollWidth - content.clientWidth) / 2;
+        content.scrollLeft = centerScroll;
+        if (header) {
+          header.scrollLeft = centerScroll;
+        }
       }
     });
   }
