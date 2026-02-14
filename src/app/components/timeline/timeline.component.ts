@@ -78,24 +78,6 @@ export class TimelineComponent {
 
   set currentTimescale(value: TimescaleType) {
     this.timelineService.setTimescale(value);
-    // Reset scroll and trigger infinite scroll to fill viewport
-    this.resetScrollAndFillViewport();
-  }
-
-  private resetScrollAndFillViewport(): void {
-    requestAnimationFrame(() => {
-      const content = this.timelineContent?.nativeElement;
-      const header = this.timelineHeader?.nativeElement;
-      if (content) {
-        // Reset scroll to beginning
-        content.scrollLeft = 0;
-        if (header) {
-          header.scrollLeft = 0;
-        }
-        // Trigger infinite scroll check to fill viewport
-        this.checkInfiniteScroll(content);
-      }
-    });
   }
 
   getWorkOrdersForCenter(workCenterId: string): WorkOrderDocument[] {
@@ -250,8 +232,8 @@ export class TimelineComponent {
     return column.date.toISOString();
   }
 
-  // Threshold in pixels to trigger loading more columns (higher = trigger sooner)
-  private readonly SCROLL_THRESHOLD = 500;
+  // Threshold in pixels to trigger loading more columns
+  private readonly SCROLL_THRESHOLD = 200;
   private isExpandingPast = false;
   private isExpandingFuture = false;
 
@@ -287,10 +269,6 @@ export class TimelineComponent {
       requestAnimationFrame(() => {
         const addedWidth = columnsAdded * this.timelineService.columnWidth();
         container.scrollLeft = scrollLeft + addedWidth;
-        // Also sync header scroll position
-        if (this.timelineHeader?.nativeElement) {
-          this.timelineHeader.nativeElement.scrollLeft = scrollLeft + addedWidth;
-        }
         this.isExpandingPast = false;
       });
     }
