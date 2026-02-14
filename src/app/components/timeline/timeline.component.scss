@@ -245,11 +245,21 @@
   overflow: visible;
 }
 
-.timeline-cell {
-  flex-shrink: 0;
-  height: 100%;
-  border-right: 1px solid $border-color;
-  box-sizing: border-box;
+// Column dividers - full height vertical lines
+.column-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: $border-color;
+  pointer-events: none;
+  z-index: 1;
+
+  &.current-month-divider {
+    width: 3px;
+    background-color: rgba(212, 215, 255, 1);
+    z-index: 2;
+  }
 }
 
 // Hover placeholder for empty timeline area

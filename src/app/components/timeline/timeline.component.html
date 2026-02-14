@@ -62,6 +62,15 @@
     <!-- Bottom-Right: Timeline Content -->
     <div class="timeline-content" #timelineContent (scroll)="onTimelineScroll($event)">
       <div class="timeline-inner" [style.width.px]="totalWidth()">
+        <!-- Column dividers (full height vertical lines) -->
+        @for (column of columns(); track trackByColumn($index, column); let i = $index) {
+          <div 
+            class="column-divider"
+            [class.current-month-divider]="column.isCurrentPeriod"
+            [style.left.px]="i * timelineService.columnWidth()"
+          ></div>
+        }
+
         <!-- Current Month Badge -->
         @if (currentPeriodBadgePosition() !== null) {
           <div 
@@ -87,13 +96,6 @@
                 (mousemove)="onTimelineMouseMove($event, workCenter.docId)"
                 (mouseleave)="onTimelineMouseLeave()"
               >
-                <!-- Grid columns -->
-                @for (column of columns(); track trackByColumn($index, column)) {
-                  <div
-                    class="timeline-cell"
-                    [style.width.px]="timelineService.columnWidth()"
-                  ></div>
-                }
 
                 <!-- Hover placeholder -->
                 @if (hoverPlaceholder() && hoverPlaceholder()!.workCenterId === workCenter.docId) {
