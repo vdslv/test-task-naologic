@@ -79,6 +79,15 @@ export class TimelineComponent {
 
   set currentTimescale(value: TimescaleType) {
     this.timelineService.setTimescale(value);
+    // Reset scroll to start when switching timescale
+    requestAnimationFrame(() => {
+      if (this.timelineContent?.nativeElement) {
+        this.timelineContent.nativeElement.scrollLeft = 0;
+      }
+      if (this.timelineHeader?.nativeElement) {
+        this.timelineHeader.nativeElement.scrollLeft = 0;
+      }
+    });
   }
 
   getWorkOrdersForCenter(workCenterId: string): WorkOrderDocument[] {
