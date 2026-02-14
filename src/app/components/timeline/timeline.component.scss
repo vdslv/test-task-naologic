@@ -192,6 +192,7 @@
   flex-direction: column;
   min-height: 100%;
   position: relative;
+  overflow: hidden; // Clip bars that extend beyond columns
 }
 
 .timeline-column-header {
