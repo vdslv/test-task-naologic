@@ -57,10 +57,10 @@
             [style.width.px]="timelineService.columnWidth()"
             [class.current-period]="column.isCurrentPeriod"
           >
-            @if (column.isCurrentPeriod) {
-              <span class="current-period-badge">Current {{ currentTimescale }}</span>
-            }
             <span class="column-label">{{ column.label }}</span>
+            @if (column.isCurrentPeriod) {
+              <span class="current-period-badge">Current month</span>
+            }
           </div>
         }
       </div>
@@ -117,6 +117,7 @@
             </div>
           </div>
         }
+
       </div>
     </div>
   </div>

@@ -213,6 +213,35 @@
   }
 }
 
+// Shared ng-select dropdown panel styles
+@mixin ng-select-dropdown-options {
+  .ng-dropdown-panel {
+    border: 1px solid $border-color;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+    margin-top: $padding-xs;
+
+    .ng-dropdown-panel-items {
+      .ng-option {
+        padding: 12px $padding-lg;
+        font-family: "CircularStd-Book", "Circular-Std", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(47, 48, 89, 1);
+
+        &.ng-option-marked {
+          background-color: $bg-light;
+        }
+
+        &.ng-option-selected {
+          background-color: transparent;
+          color: rgba(62, 64, 219, 1);
+        }
+      }
+    }
+  }
+}
+
 // =============================================================================
 // PANEL MIXINS
 // =============================================================================

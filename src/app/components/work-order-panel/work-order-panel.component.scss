@@ -124,6 +124,8 @@
         }
       }
     }
+
+    @include ng-select-dropdown-options;
   }
 }
 

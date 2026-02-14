@@ -2,8 +2,11 @@
 
 .timeline-container {
   font-family: $font-circular;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   background-color: $bg-white;
+  overflow: hidden;
 }
 
 // Header
@@ -17,11 +20,12 @@
   letter-spacing: 2px;
 
   .logo-nao {
-    color: $element-primary-3;
+    color: $primary-shade-2;
+    font-weight: 600;
   }
 
   .logo-logic {
-    color: $text-4-labels;
+    color: $primary-shade-2;
   }
 }
 
@@ -88,30 +92,7 @@
       }
     }
 
-    .ng-dropdown-panel {
-      border: 1px solid $border-color;
-      border-radius: $border-radius-lg;
-      box-shadow: $shadow-md;
-      margin-top: $padding-xs;
-
-      .ng-dropdown-panel-items {
-        .ng-option {
-          padding: 8px $padding-md;
-          font-family: "CircularStd-Medium", "Circular-Std", sans-serif;
-          font-size: 13px;
-          color: $text-primary;
-
-          &.ng-option-marked {
-            background-color: $bg-light;
-          }
-
-          &.ng-option-selected {
-            background-color: $hover-bg;
-            color: rgba(62, 64, 219, 1);
-          }
-        }
-      }
-    }
+    @include ng-select-dropdown-options;
   }
 }
 
@@ -119,6 +100,8 @@
 .timeline-grid {
   display: flex;
   border-top: 1px solid $border-color;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -129,6 +112,9 @@
   border-right: 1px solid $border-color;
   background-color: $bg-white;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .work-centers-header {
@@ -147,12 +133,16 @@
 }
 
 .work-centers-list {
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  background-color: $bg-white;
 }
 
 .work-center-row {
   @include row-base;
   padding: 0 $padding-xl;
+  border-bottom: 1px solid $border-color;
   @include row-hover;
 }
 
@@ -164,8 +154,10 @@
 // Timeline Panel (Right)
 .timeline-panel {
   flex: 1;
-  overflow-x: auto;
-  overflow-y: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .timeline-header-row {
@@ -182,8 +174,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid $border-color;
+  gap: $padding-xs;
   position: relative;
+  border-right: 1px solid $border-color;
 
   &.current-period {
     background-color: $status-current-period-bg;
@@ -191,13 +184,16 @@
 }
 
 .current-period-badge {
-  position: absolute;
-  top: $padding-xs;
-  @include font-circular($font-size-xs, 500);
-  color: $status-current-period-text;
-  background-color: $status-current-period-badge-bg;
-  padding: 2px $padding-sm;
-  border-radius: $border-radius-sm;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0 $padding-md;
+  border-radius: 5px;
+  background-color: rgba(212, 215, 255, 1);
+  color: rgba(62, 64, 219, 1);
+  font-family: "CircularStd-Book", "Circular-Std", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
   white-space: nowrap;
 }
 
@@ -207,7 +203,10 @@
 }
 
 .timeline-rows {
-  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background-color: rgba(247, 249, 252, 1);
 }
 
 .timeline-row {
