@@ -15,9 +15,9 @@
       </div>
 
       <form [formGroup]="form" class="panel-form">
-        @if (errorMessage) {
+        @if (errorMessage || validationError) {
           <div class="error-message">
-            {{ errorMessage }}
+            {{ errorMessage || validationError }}
           </div>
         }
 

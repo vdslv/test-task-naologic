@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WorkOrderDocument, WorkOrderStatus } from '../../models';
@@ -29,6 +29,7 @@ export class WorkOrderPanelComponent implements OnChanges {
   @Input() workCenterId: string = '';
   @Input() initialStartDate: string = '';
   @Input() errorMessage: string = '';
+  @Input() existingWorkOrders: WorkOrderDocument[] = [];
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<WorkOrderFormData>();
@@ -41,6 +42,8 @@ export class WorkOrderPanelComponent implements OnChanges {
     { value: 'complete', label: 'Complete' },
     { value: 'blocked', label: 'Blocked' }
   ];
+
+  validationError: string = '';
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -113,15 +116,24 @@ export class WorkOrderPanelComponent implements OnChanges {
   }
 
   onSubmit(): void {
+    this.validationError = '';
+    
     if (this.form.valid) {
       const formValue = this.form.value;
-
-      // Validate end date is after start date
       const startDate = this.formatDate(formValue.startDate);
       const endDate = this.formatDate(formValue.endDate);
 
+      // Validate end date is after start date
       if (new Date(endDate) <= new Date(startDate)) {
-        return; // Could show error, but form validation should handle this
+        this.validationError = 'End date must be after start date';
+        return;
+      }
+
+      // Validate no overlap with existing work orders on same work center
+      const overlapError = this.checkOverlap(startDate, endDate);
+      if (overlapError) {
+        this.validationError = overlapError;
+        return;
       }
 
       this.save.emit({
@@ -132,6 +144,33 @@ export class WorkOrderPanelComponent implements OnChanges {
         workCenterId: this.workCenterId
       });
     }
+  }
+
+  private checkOverlap(startDate: string, endDate: string): string | null {
+    const newStart = new Date(startDate).getTime();
+    const newEnd = new Date(endDate).getTime();
+    
+    // Filter work orders for the same work center
+    const workOrdersOnSameCenter = this.existingWorkOrders.filter(
+      wo => wo.data.workCenterId === this.workCenterId
+    );
+
+    for (const wo of workOrdersOnSameCenter) {
+      // Skip the current work order if editing
+      if (this.mode === 'edit' && this.workOrder && wo.docId === this.workOrder.docId) {
+        continue;
+      }
+
+      const existingStart = new Date(wo.data.startDate).getTime();
+      const existingEnd = new Date(wo.data.endDate).getTime();
+
+      // Check for overlap: new order overlaps if it starts before existing ends AND ends after existing starts
+      if (newStart < existingEnd && newEnd > existingStart) {
+        return `This time period overlaps with "${wo.data.name}" (${wo.data.startDate} - ${wo.data.endDate})`;
+      }
+    }
+
+    return null;
   }
 
   onCancel(): void {

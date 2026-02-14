@@ -148,6 +148,7 @@
   [workCenterId]="selectedWorkCenterId()"
   [initialStartDate]="initialStartDate()"
   [errorMessage]="panelError()"
+  [existingWorkOrders]="workOrderService.workOrders()"
   (close)="onPanelClose()"
   (save)="onPanelSave($event)"
 />
