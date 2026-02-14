@@ -173,6 +173,10 @@
     display: none;
   }
 
+  .visually-hidden {
+    display: none !important;
+  }
+
   .ngb-dp-arrow {
     display: flex;
     align-items: center;
