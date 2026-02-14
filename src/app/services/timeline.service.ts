@@ -160,7 +160,9 @@ export class TimelineService {
         width = weeks * this.columnWidth();
         break;
       case 'month':
-        const months = this.monthsBetween(start, end) + (end.getDate() / 30);
+        // Calculate width based on actual days difference, converted to months
+        const totalDays = this.daysBetween(start, end) + 1;
+        const months = totalDays / 30; // Average days per month
         width = Math.max(months, 0.5) * this.columnWidth();
         break;
     }
