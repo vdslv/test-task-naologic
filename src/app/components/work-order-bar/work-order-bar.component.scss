@@ -3,21 +3,25 @@
 .work-order-bar {
   @include work-order-bar-base;
 
-  // Status-based colors
+  // Status-based colors with box-shadow borders
   &.status-open {
     @include work-order-bar-status($status-in-progress-bar-bg, $text-primary);
+    box-shadow: 0 0 0 1px rgba(206, 251, 255, 1);
   }
 
   &.status-in-progress {
     @include work-order-bar-status($status-in-progress-bar-bg, $text-primary);
+    box-shadow: 0 0 0 1px rgba(222, 224, 255, 1);
   }
 
   &.status-complete {
     @include work-order-bar-status($status-complete-bar-bg, $text-primary);
+    box-shadow: 0 0 0 1px rgba(209, 250, 179, 1);
   }
 
   &.status-blocked {
     @include work-order-bar-status($status-blocked-bar-bg, $text-primary);
+    box-shadow: 0 0 0 1px rgba(255, 245, 207, 1);
   }
 }
 

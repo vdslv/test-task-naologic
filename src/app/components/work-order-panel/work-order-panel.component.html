@@ -7,10 +7,10 @@
           <p class="panel-subtitle">Specify the dates, name and status for this order</p>
         </div>
         <div class="panel-actions">
-          <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
-          <button type="button" class="btn-create" (click)="onSubmit()" [disabled]="!form.valid">
+          <app-button variant="regular" (clicked)="onCancel()">Cancel</app-button>
+          <app-button variant="primary" [disabled]="!form.valid" (clicked)="onSubmit()">
             {{ mode === 'create' ? 'Create' : 'Save' }}
-          </button>
+          </app-button>
         </div>
       </div>
 

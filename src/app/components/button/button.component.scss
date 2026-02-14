@@ -1,0 +1,38 @@
+.btn {
+  height: 32px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: "CircularStd-Book", "Circular-Std", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.33px;
+  line-height: 19px;
+  transition: opacity 0.2s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    opacity: 0.9;
+  }
+}
+
+.btn-regular {
+  background-color: rgba(255, 255, 255, 1);
+  color: rgba(47, 48, 89, 1);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 1),
+    0 1px 3px 0 rgba(200, 207, 233, 1);
+}
+
+.btn-primary {
+  background-color: rgba(86, 89, 255, 1);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 0 0 1px rgba(86, 89, 255, 1),
+    0 1px 3px 0 rgba(200, 207, 233, 1);
+}

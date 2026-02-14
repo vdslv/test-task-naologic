@@ -156,7 +156,12 @@
 
 // Shared status badge colors (used when badge has status class directly)
 @mixin status-badge-colors {
-  &.status-open,
+  &.status-open {
+    border: 1px solid rgba(206, 251, 255, 1);
+    background-color: rgba(228, 253, 255, 1);
+    color: rgba(62, 64, 219, 1);
+  }
+
   &.status-in-progress {
     background-color: rgba(214, 216, 255, 1);
     color: rgba(62, 64, 219, 1);
@@ -175,7 +180,12 @@
 
 // Shared status badge colors (used when parent has status class)
 @mixin status-badge-colors-parent {
-  .status-open &,
+  .status-open & {
+    border: 1px solid rgba(206, 251, 255, 1);
+    background-color: rgba(228, 253, 255, 1);
+    color: rgba(62, 64, 219, 1);
+  }
+
   .status-in-progress & {
     background-color: rgba(214, 216, 255, 1);
     color: rgba(62, 64, 219, 1);
