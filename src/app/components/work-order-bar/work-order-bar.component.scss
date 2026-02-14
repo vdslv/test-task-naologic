@@ -5,19 +5,19 @@
 
   // Status-based colors
   &.status-open {
-    @include work-order-bar-status($element-primary-6, $text-primary);
+    @include work-order-bar-status($status-in-progress-bar-bg, $text-primary);
   }
 
   &.status-in-progress {
-    @include work-order-bar-status($element-primary-6, $text-primary);
+    @include work-order-bar-status($status-in-progress-bar-bg, $text-primary);
   }
 
   &.status-complete {
-    @include work-order-bar-status($status-complete-bg, $status-complete-text);
+    @include work-order-bar-status($status-complete-bar-bg, $text-primary);
   }
 
   &.status-blocked {
-    @include work-order-bar-status($status-blocked-bg, $status-blocked-text);
+    @include work-order-bar-status($status-blocked-bar-bg, $text-primary);
   }
 }
 

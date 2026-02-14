@@ -18,7 +18,12 @@ $border-color: #F0F1F5;
 $bg-light: #FAFBFC;
 $bg-white: #FFFFFF;
 
-// Status Colors
+// Status Colors - Task Bar Backgrounds
+$status-in-progress-bar-bg: rgba(238, 240, 255, 1);
+$status-blocked-bar-bg: rgba(255, 252, 241, 1);
+$status-complete-bar-bg: rgba(248, 255, 243, 1);
+
+// Status Colors - Badge Colors
 $status-complete-bg: #d1fae5;
 $status-complete-text: #065f46;
 $status-complete-badge: #10b981;

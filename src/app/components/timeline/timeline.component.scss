@@ -198,9 +198,9 @@
   position: absolute;
   top: $padding-sm;
   height: 32px;
-  background-color: rgba($element-primary-6, 0.5);
-  border: 2px dashed $element-primary-3;
-  border-radius: $border-radius-md;
+  background-color: rgba(101, 112, 255, 0.1);
+  border: 1px solid rgba(195, 199, 255, 1);
+  border-radius: 8px;
   pointer-events: none;
 }
 
