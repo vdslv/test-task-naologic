@@ -251,16 +251,6 @@
   }
 }
 
-.today-indicator {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background-color: $element-primary-3;
-  z-index: 5;
-  pointer-events: none;
-}
-
 // Hover placeholder for empty timeline area
 .hover-placeholder {
   position: absolute;

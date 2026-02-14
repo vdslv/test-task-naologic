@@ -57,7 +57,13 @@
 }
 
 .form-label {
-  @include form-label;
+  display: block;
+  height: 16px;
+  color: rgba(104, 113, 150, 1);
+  font-family: "CircularStd-Regular", "Circular-Std", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: $padding-sm;
 }
 
 .form-input {

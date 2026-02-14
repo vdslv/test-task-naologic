@@ -13,7 +13,6 @@ $text-4-labels: #687196;
 $text-6-disabled: #D8DCEB;
 
 // Utility Colors
-$utility-stroke-2: #F0F1F5;
 $border-color: rgba(230, 235, 240, 1);
 $bg-light: #FAFBFC;
 $bg-white: #FFFFFF;
@@ -23,18 +22,8 @@ $status-in-progress-bar-bg: rgba(238, 240, 255, 1);
 $status-blocked-bar-bg: rgba(255, 252, 241, 1);
 $status-complete-bar-bg: rgba(248, 255, 243, 1);
 
-// Status Colors - Badge Colors
-$status-complete-bg: #d1fae5;
-$status-complete-text: #065f46;
-$status-complete-badge: #10b981;
-
-$status-blocked-bg: #fef3c7;
-$status-blocked-text: #92400e;
-$status-blocked-badge: #f59e0b;
-
+// Status Colors - Current Period
 $status-current-period-bg: #fffbeb;
-$status-current-period-text: #d97706;
-$status-current-period-badge-bg: #fef3c7;
 
 // Error Colors
 $error-bg: #fef2f2;
@@ -54,7 +43,6 @@ $font-circular: "CircularStd-Medium", "Circular-Std", -apple-system, BlinkMacSys
 $font-nunito: "Nunito", sans-serif;
 
 // Font Sizes
-$font-size-xs: 10px;
 $font-size-sm: 11.25px;
 $font-size-base: 13px;
 $font-size-md: 14px;
@@ -70,7 +58,7 @@ $line-height-title: 34px;
 
 $row-height: 48px;
 $header-height: 32px;
-$panel-width: 400px;
+$panel-width: 591px;
 $work-centers-width: 220px;
 $work-centers-width-mobile: 160px;
 

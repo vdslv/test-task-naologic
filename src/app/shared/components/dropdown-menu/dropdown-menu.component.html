@@ -1,0 +1,17 @@
+@if (isOpen) {
+  <div 
+    class="dropdown-menu"
+    [style.top.px]="position.top"
+    [style.left.px]="position.left"
+  >
+    @for (item of items; track item.value) {
+      <button 
+        class="dropdown-item"
+        [class.dropdown-item-danger]="item.variant === 'danger'"
+        (click)="onItemClick(item, $event)"
+      >
+        {{ item.label }}
+      </button>
+    }
+  </div>
+}

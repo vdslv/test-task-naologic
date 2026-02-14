@@ -1,0 +1,24 @@
+@use '../../../styles' as *;
+
+.dropdown-menu {
+  position: fixed;
+  background-color: $bg-white;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  z-index: 9999;
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.dropdown-item {
+  @include dropdown-item;
+
+  &.dropdown-item-danger {
+    color: $error-text;
+
+    &:hover {
+      background-color: $error-bg;
+    }
+  }
+}

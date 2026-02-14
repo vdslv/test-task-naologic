@@ -119,10 +119,6 @@
                     />
                   }
 
-                  <!-- Today indicator line -->
-                  @if (todayPosition() !== null && todayPosition()! >= 0 && todayPosition()! <= totalWidth()) {
-                    <div class="today-indicator" [style.left.px]="todayPosition()"></div>
-                  }
                 </div>
               </div>
             }
