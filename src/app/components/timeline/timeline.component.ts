@@ -287,6 +287,10 @@ export class TimelineComponent {
       requestAnimationFrame(() => {
         const addedWidth = columnsAdded * this.timelineService.columnWidth();
         container.scrollLeft = scrollLeft + addedWidth;
+        // Also sync header scroll position
+        if (this.timelineHeader?.nativeElement) {
+          this.timelineHeader.nativeElement.scrollLeft = scrollLeft + addedWidth;
+        }
         this.isExpandingPast = false;
       });
     }
