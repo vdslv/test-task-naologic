@@ -116,69 +116,160 @@
 // ngb-datepicker styling
 ::ng-deep {
   ngb-datepicker {
+    display: block;
+    margin-top: $padding-sm;
     border: 1px solid $border-color;
     border-radius: $border-radius-lg;
     box-shadow: $shadow-md;
+    background-color: $bg-white;
   }
 
   .ngb-dp-header {
     background-color: $bg-light;
-    padding: $padding-sm $padding-md;
+    padding: $padding-md;
     border-bottom: 1px solid $border-color;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+  }
+
+  .ngb-dp-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .ngb-dp-navigation-select {
     display: flex;
     gap: $padding-sm;
+    flex: 1;
+    justify-content: center;
 
     select {
       @include font-circular($font-size-md, 500);
-      color: $text-primary;
+      color: $element-primary-3;
       background-color: $bg-white;
       border: 1px solid $border-color;
       border-radius: $border-radius-md;
-      padding: $padding-xs $padding-sm;
+      padding: $padding-xs $padding-md;
       cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23687196' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 28px;
 
       &:focus {
         outline: none;
+        border-color: $element-primary-3;
+        box-shadow: 0 0 0 2px rgba(86, 89, 255, 0.1);
+      }
+
+      &:hover {
         border-color: $element-primary-3;
       }
     }
   }
 
   .ngb-dp-month-name {
-    @include font-circular($font-size-md, 500);
-    color: $text-primary;
+    display: none;
   }
 
-  .ngb-dp-weekday {
-    color: $text-4-labels;
-    @include font-circular(12px, 500);
+  .ngb-dp-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .ngb-dp-day {
-    .btn-light {
-      @include font-circular($font-size-base, 500);
-      border-radius: $border-radius-md;
+  .ngb-dp-arrow-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 
-      &:hover {
-        background-color: $hover-bg;
-      }
+    &:hover {
+      background-color: $hover-bg;
+    }
 
-      &.bg-primary {
-        background-color: $element-primary-3 !important;
-      }
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
   }
 
   .ngb-dp-navigation-chevron {
     color: $text-4-labels;
+    border-width: 0.15em 0.15em 0 0;
+    width: 0.5em;
+    height: 0.5em;
   }
 
-  .ngb-dp-arrow-btn {
-    &:hover {
-      background-color: $hover-bg;
+  .ngb-dp-months {
+    padding: $padding-md;
+  }
+
+  .ngb-dp-weekdays {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: $padding-sm;
+    margin-bottom: $padding-sm;
+  }
+
+  .ngb-dp-weekday {
+    color: $text-4-labels;
+    @include font-circular(12px, 500);
+    font-style: normal;
+    text-transform: uppercase;
+  }
+
+  .ngb-dp-week {
+    padding: 2px 0;
+  }
+
+  .ngb-dp-day,
+  .ngb-dp-weekday {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .ngb-dp-day {
+    text-align: center;
+
+    .btn-light {
+      width: 100%;
+      height: 100%;
+      @include font-circular($font-size-base, 500);
+      color: $text-primary;
+      border-radius: $border-radius-md;
+      border: none;
+      background-color: transparent;
+      transition: background-color 0.15s ease, color 0.15s ease;
+
+      &:hover {
+        background-color: $hover-bg;
+      }
+
+      &.active,
+      &.bg-primary {
+        background-color: $element-primary-3 !important;
+        color: #fff !important;
+      }
+    }
+
+    &.disabled,
+    &.hidden {
+      .btn-light {
+        color: $text-6-disabled;
+      }
+    }
+  }
+
+  .ngb-dp-today {
+    .btn-light:not(.active):not(.bg-primary) {
+      border: 1px solid $element-primary-3;
     }
   }
 }
