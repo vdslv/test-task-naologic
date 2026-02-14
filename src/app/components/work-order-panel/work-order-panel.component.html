@@ -69,8 +69,8 @@
           </div>
           @if (showEndDatePicker) {
             <ngb-datepicker
-              [ngModel]="form.get('endDate')?.value"
-              (ngModelChange)="onEndDateSelect($event)"
+              [startDate]="form.get('endDate')?.value"
+              (dateSelect)="onEndDateSelect($event)"
               navigation="select"
               [showWeekNumbers]="false"
             />
@@ -95,8 +95,8 @@
           </div>
           @if (showStartDatePicker) {
             <ngb-datepicker
-              [ngModel]="form.get('startDate')?.value"
-              (ngModelChange)="onStartDateSelect($event)"
+              [startDate]="form.get('startDate')?.value"
+              (dateSelect)="onStartDateSelect($event)"
               navigation="select"
               [showWeekNumbers]="false"
             />
