@@ -29,8 +29,8 @@ export class TimelineService {
   // Fixed column width in pixels
   readonly columnWidth = () => 110;
 
-  // Initial number of columns to display
-  private readonly INITIAL_COLUMNS = 12;
+  // Initial number of columns to display (enough to fill wide screens ~2000px / 110px ≈ 18)
+  private readonly INITIAL_COLUMNS = 24;
 
   constructor() {
     this.centerOnToday();
