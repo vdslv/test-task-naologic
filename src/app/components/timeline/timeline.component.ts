@@ -232,6 +232,11 @@ export class TimelineComponent {
     return column.date.toISOString();
   }
 
+  // Threshold in pixels to trigger loading more columns
+  private readonly SCROLL_THRESHOLD = 200;
+  private isExpandingPast = false;
+  private isExpandingFuture = false;
+
   onTimelineScroll(event: Event): void {
     const target = event.target as HTMLElement;
     
@@ -243,6 +248,39 @@ export class TimelineComponent {
     // Sync vertical scroll with work centers list
     if (this.workCentersList?.nativeElement) {
       this.workCentersList.nativeElement.scrollTop = target.scrollTop;
+    }
+
+    // Check if we need to expand the timeline
+    this.checkInfiniteScroll(target);
+  }
+
+  private checkInfiniteScroll(container: HTMLElement): void {
+    const scrollLeft = container.scrollLeft;
+    const scrollWidth = container.scrollWidth;
+    const clientWidth = container.clientWidth;
+    const scrollRight = scrollWidth - scrollLeft - clientWidth;
+
+    // Expand past (prepend columns) when scrolling near left edge
+    if (scrollLeft < this.SCROLL_THRESHOLD && !this.isExpandingPast) {
+      this.isExpandingPast = true;
+      const columnsAdded = this.timelineService.expandPast();
+      
+      // Adjust scroll position to compensate for prepended content
+      requestAnimationFrame(() => {
+        const addedWidth = columnsAdded * this.timelineService.columnWidth();
+        container.scrollLeft = scrollLeft + addedWidth;
+        this.isExpandingPast = false;
+      });
+    }
+
+    // Expand future (append columns) when scrolling near right edge
+    if (scrollRight < this.SCROLL_THRESHOLD && !this.isExpandingFuture) {
+      this.isExpandingFuture = true;
+      this.timelineService.expandFuture();
+      
+      requestAnimationFrame(() => {
+        this.isExpandingFuture = false;
+      });
     }
   }
 }

@@ -14,9 +14,14 @@ export interface TimelineColumn {
 export class TimelineService {
   private timescaleSignal = signal<TimescaleType>('month');
   private viewStartDateSignal = signal<Date>(new Date());
+  private viewEndDateSignal = signal<Date>(new Date());
 
   readonly timescale = this.timescaleSignal.asReadonly();
   readonly viewStartDate = this.viewStartDateSignal.asReadonly();
+  readonly viewEndDate = this.viewEndDateSignal.asReadonly();
+
+  // Buffer columns to load when scrolling near edges
+  private readonly BUFFER_COLUMNS = 6;
 
   // Column width in pixels based on timescale
   readonly columnWidth = computed(() => {
@@ -54,20 +59,87 @@ export class TimelineService {
     switch (this.timescaleSignal()) {
       case 'day':
         this.viewStartDateSignal.set(this.addDays(today, -offset));
+        this.viewEndDateSignal.set(this.addDays(today, offset));
         break;
       case 'week':
         const weekStart = this.getWeekStart(today);
         this.viewStartDateSignal.set(this.addDays(weekStart, -offset * 7));
+        this.viewEndDateSignal.set(this.addDays(weekStart, offset * 7));
         break;
       case 'month':
         const monthStart = new Date(today.getFullYear(), today.getMonth() - offset, 1);
+        const monthEnd = new Date(today.getFullYear(), today.getMonth() + offset, 1);
         this.viewStartDateSignal.set(monthStart);
+        this.viewEndDateSignal.set(monthEnd);
         break;
     }
   }
 
   /**
-   * Generate timeline columns based on current timescale and view start date
+   * Expand the timeline by prepending earlier dates
+   * @returns Number of columns added (for scroll adjustment)
+   */
+  expandPast(): number {
+    const columnsToAdd = this.BUFFER_COLUMNS;
+    const currentStart = new Date(this.viewStartDateSignal());
+
+    switch (this.timescaleSignal()) {
+      case 'day':
+        this.viewStartDateSignal.set(this.addDays(currentStart, -columnsToAdd));
+        break;
+      case 'week':
+        this.viewStartDateSignal.set(this.addDays(currentStart, -columnsToAdd * 7));
+        break;
+      case 'month':
+        this.viewStartDateSignal.set(new Date(currentStart.getFullYear(), currentStart.getMonth() - columnsToAdd, 1));
+        break;
+    }
+
+    return columnsToAdd;
+  }
+
+  /**
+   * Expand the timeline by appending future dates
+   * @returns Number of columns added
+   */
+  expandFuture(): number {
+    const columnsToAdd = this.BUFFER_COLUMNS;
+    const currentEnd = new Date(this.viewEndDateSignal());
+
+    switch (this.timescaleSignal()) {
+      case 'day':
+        this.viewEndDateSignal.set(this.addDays(currentEnd, columnsToAdd));
+        break;
+      case 'week':
+        this.viewEndDateSignal.set(this.addDays(currentEnd, columnsToAdd * 7));
+        break;
+      case 'month':
+        this.viewEndDateSignal.set(new Date(currentEnd.getFullYear(), currentEnd.getMonth() + columnsToAdd, 1));
+        break;
+    }
+
+    return columnsToAdd;
+  }
+
+  /**
+   * Get total number of columns based on start and end dates
+   */
+  getTotalColumns(): number {
+    const start = this.viewStartDateSignal();
+    const end = this.viewEndDateSignal();
+
+    switch (this.timescaleSignal()) {
+      case 'day':
+        return this.daysBetween(start, end) + 1;
+      case 'week':
+        return Math.ceil(this.daysBetween(start, end) / 7) + 1;
+      case 'month':
+        return (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1;
+    }
+  }
+
+  /**
+   * Generate timeline columns based on current timescale and date range
    */
   generateColumns(): TimelineColumn[] {
     const columns: TimelineColumn[] = [];
@@ -75,7 +147,9 @@ export class TimelineService {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    for (let i = 0; i < this.visibleColumns(); i++) {
+    const totalColumns = this.getTotalColumns();
+
+    for (let i = 0; i < totalColumns; i++) {
       let date: Date;
       let label: string;
       let isCurrentPeriod = false;

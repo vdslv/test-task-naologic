@@ -53,7 +53,7 @@
 
         <div class="form-group">
           <label class="form-label">Start date</label>
-          <div class="date-input-wrapper" (click)="startDatePicker.toggle()">
+          <div class="date-input-wrapper">
             <input
               class="form-input date-input"
               placeholder="01.01.2026"
@@ -63,9 +63,10 @@
               [markDisabled]="markStartDateDisabled"
               navigation="select"
               (dateSelect)="onStartDateSelect($event)"
+              (click)="startDatePicker.open()"
               readonly
             />
-            <button type="button" class="date-picker-toggle">
+            <button type="button" class="date-picker-toggle" (click)="startDatePicker.toggle(); $event.stopPropagation()">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M12.667 2.667H3.333C2.597 2.667 2 3.264 2 4v9.333c0 .737.597 1.334 1.333 1.334h9.334c.736 0 1.333-.597 1.333-1.334V4c0-.736-.597-1.333-1.333-1.333z" stroke="#687196" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M10.667 1.333v2.667M5.333 1.333v2.667M2 6.667h12" stroke="#687196" stroke-linecap="round" stroke-linejoin="round"/>
@@ -76,7 +77,7 @@
 
         <div class="form-group">
           <label class="form-label">End date</label>
-          <div class="date-input-wrapper" (click)="endDatePicker.toggle()">
+          <div class="date-input-wrapper">
             <input
               class="form-input date-input"
               placeholder="02.01.2026"
@@ -86,9 +87,10 @@
               [markDisabled]="markEndDateDisabled"
               navigation="select"
               (dateSelect)="onEndDateSelect($event)"
+              (click)="endDatePicker.open()"
               readonly
             />
-            <button type="button" class="date-picker-toggle">
+            <button type="button" class="date-picker-toggle" (click)="endDatePicker.toggle(); $event.stopPropagation()">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M12.667 2.667H3.333C2.597 2.667 2 3.264 2 4v9.333c0 .737.597 1.334 1.333 1.334h9.334c.736 0 1.333-.597 1.333-1.334V4c0-.736-.597-1.333-1.333-1.333z" stroke="#687196" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M10.667 1.333v2.667M5.333 1.333v2.667M2 6.667h12" stroke="#687196" stroke-linecap="round" stroke-linejoin="round"/>
