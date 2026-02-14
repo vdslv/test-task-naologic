@@ -52,6 +52,15 @@ export class TimelineComponent {
   columns = computed(() => this.timelineService.generateColumns());
   totalWidth = computed(() => this.columns().length * this.timelineService.columnWidth());
   todayPosition = computed(() => this.timelineService.getTodayIndicatorPosition());
+  
+  // Current period badge position (center of current period column)
+  currentPeriodBadgePosition = computed(() => {
+    const cols = this.columns();
+    const currentIndex = cols.findIndex(c => c.isCurrentPeriod);
+    if (currentIndex === -1) return null;
+    const columnWidth = this.timelineService.columnWidth();
+    return (currentIndex * columnWidth) + (columnWidth / 2);
+  });
 
   constructor(
     public workOrderService: WorkOrderService,

@@ -137,7 +137,7 @@
   color: $text-color;
 }
 
-// Status badge variants
+// Status badge variants (legacy - white text)
 @mixin status-open {
   @include status-badge($element-primary-3);
 }
@@ -152,6 +152,58 @@
 
 @mixin status-blocked {
   @include status-badge($status-blocked-badge);
+}
+
+// Shared status badge colors (used when badge has status class directly)
+@mixin status-badge-colors {
+  &.status-open,
+  &.status-in-progress {
+    background-color: rgba(214, 216, 255, 1);
+    color: rgba(62, 64, 219, 1);
+  }
+
+  &.status-complete {
+    background-color: rgba(225, 255, 204, 1);
+    color: rgba(8, 162, 104, 1);
+  }
+
+  &.status-blocked {
+    background-color: rgba(252, 238, 181, 1);
+    color: rgba(177, 54, 0, 1);
+  }
+}
+
+// Shared status badge colors (used when parent has status class)
+@mixin status-badge-colors-parent {
+  .status-open &,
+  .status-in-progress & {
+    background-color: rgba(214, 216, 255, 1);
+    color: rgba(62, 64, 219, 1);
+  }
+
+  .status-complete & {
+    background-color: rgba(225, 255, 204, 1);
+    color: rgba(8, 162, 104, 1);
+  }
+
+  .status-blocked & {
+    background-color: rgba(252, 238, 181, 1);
+    color: rgba(177, 54, 0, 1);
+  }
+}
+
+// Shared status badge base styles
+@mixin status-badge-shared {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 $padding-sm;
+  border-radius: 5px;
+  font-family: "CircularStd-Book", "Circular-Std", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  flex-shrink: 0;
+  @include status-badge-colors;
 }
 
 // =============================================================================

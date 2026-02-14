@@ -43,9 +43,7 @@
             class="status-select"
           >
             <ng-template ng-label-tmp let-item="item">
-              <span class="status-badge" [ngClass]="getStatusColor(item.value)">
-                {{ item.label }}
-              </span>
+              <app-status-badge [status]="item.value" [label]="item.label" />
             </ng-template>
             <ng-template ng-option-tmp let-item="item">
               <span class="status-option">{{ item.label }}</span>

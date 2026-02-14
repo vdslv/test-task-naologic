@@ -5,7 +5,7 @@
   [style.width.px]="width"
 >
   <span class="bar-name">{{ workOrder.data.name }}</span>
-  <span class="bar-status">{{ statusLabel }}</span>
+  <app-status-badge [status]="workOrder.data.status" />
 
   <div class="menu-wrapper">
     <button

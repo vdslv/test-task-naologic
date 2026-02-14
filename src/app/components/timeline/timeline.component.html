@@ -61,12 +61,19 @@
                 [class.current-period]="column.isCurrentPeriod"
               >
                 <span class="column-label">{{ column.label }}</span>
-                @if (column.isCurrentPeriod) {
-                  <span class="current-period-badge">Current month</span>
-                }
               </div>
             }
           </div>
+
+          <!-- Current Month Badge (positioned below header) -->
+          @if (currentPeriodBadgePosition() !== null) {
+            <div 
+              class="current-period-badge"
+              [style.left.px]="currentPeriodBadgePosition()"
+            >
+              Current month
+            </div>
+          }
 
           <!-- Timeline Rows -->
           <div class="timeline-rows">

@@ -88,7 +88,6 @@
 
       .ng-arrow {
         border-color: rgba(62, 64, 219, 1) transparent transparent;
-        border-width: 5px 4px 0;
       }
     }
 
@@ -170,6 +169,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  position: relative;
 }
 
 .timeline-header-row {
@@ -191,7 +191,6 @@
   justify-content: center;
   gap: $padding-xs;
   position: relative;
-  border-right: 1px solid $border-color;
 
   &.current-period {
     background-color: $status-current-period-bg;
@@ -199,6 +198,9 @@
 }
 
 .current-period-badge {
+  position: absolute;
+  top: $header-height;
+  transform: translateX(-50%);
   height: 22px;
   display: flex;
   align-items: center;
@@ -210,6 +212,7 @@
   font-size: 14px;
   font-weight: 400;
   white-space: nowrap;
+  z-index: 10;
 }
 
 .column-label {
@@ -256,17 +259,6 @@
   background-color: $element-primary-3;
   z-index: 5;
   pointer-events: none;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -4px;
-    width: 10px;
-    height: 10px;
-    background-color: $element-primary-3;
-    border-radius: 50%;
-  }
 }
 
 // Hover placeholder for empty timeline area

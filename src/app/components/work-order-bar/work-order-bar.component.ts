@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkOrderDocument, WorkOrderStatus } from '../../models';
+import { StatusBadgeComponent } from '../status-badge/status-badge.component';
 
 @Component({
   selector: 'app-work-order-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, StatusBadgeComponent],
   templateUrl: './work-order-bar.component.html',
   styleUrl: './work-order-bar.component.scss'
 })

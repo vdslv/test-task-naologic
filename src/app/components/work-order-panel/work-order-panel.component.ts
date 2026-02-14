@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WorkOrderDocument, WorkOrderStatus } from '../../models';
+import { StatusBadgeComponent } from '../status-badge/status-badge.component';
 
 export interface WorkOrderFormData {
   name: string;
@@ -16,7 +17,7 @@ export interface WorkOrderFormData {
 @Component({
   selector: 'app-work-order-panel',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, NgbDatepickerModule],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, NgbDatepickerModule, StatusBadgeComponent],
   templateUrl: './work-order-panel.component.html',
   styleUrl: './work-order-panel.component.scss'
 })

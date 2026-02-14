@@ -129,29 +129,6 @@
   }
 }
 
-.status-badge {
-  display: inline-block;
-  padding: $padding-xs 10px;
-  border-radius: $border-radius-md;
-  @include font-circular(12px, 500);
-
-  &.status-open {
-    @include status-open;
-  }
-
-  &.status-in-progress {
-    @include status-in-progress;
-  }
-
-  &.status-complete {
-    @include status-complete;
-  }
-
-  &.status-blocked {
-    @include status-blocked;
-  }
-}
-
 .status-option {
   @include font-circular($font-size-md, 500);
 }
