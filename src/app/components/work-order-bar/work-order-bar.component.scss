@@ -53,6 +53,7 @@
   position: relative;
   flex-shrink: 0;
   margin-left: $padding-sm;
+  z-index: $z-index-dropdown;
 }
 
 .menu-button {
