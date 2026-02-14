@@ -29,8 +29,14 @@ export class TimelineService {
   // Fixed column width in pixels
   readonly columnWidth = () => 110;
 
-  // Initial number of columns to display
-  private readonly INITIAL_COLUMNS = 12;
+  // Get initial columns count based on timescale
+  private getInitialColumns(): number {
+    switch (this.timescaleSignal()) {
+      case 'day': return 30;    // ~1 month of days to fill wide screens
+      case 'week': return 20;   // ~5 months of weeks
+      case 'month': return 12;  // 1 year of months
+    }
+  }
 
   constructor() {
     this.centerOnToday();
@@ -45,7 +51,7 @@ export class TimelineService {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const offset = Math.floor(this.INITIAL_COLUMNS / 2);
+    const offset = Math.floor(this.getInitialColumns() / 2);
 
     switch (this.timescaleSignal()) {
       case 'day':
