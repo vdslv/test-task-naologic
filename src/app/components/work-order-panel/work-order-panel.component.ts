@@ -213,4 +213,85 @@ export class WorkOrderPanelComponent implements OnChanges {
     this.form.patchValue({ endDate: date });
     this.showEndDatePicker = false;
   }
+
+  // Mark dates as disabled for end date picker (must be after start date)
+  markEndDateDisabled = (date: NgbDateStruct): boolean => {
+    const startDate = this.form.get('startDate')?.value;
+    if (!startDate) return false;
+    
+    const dateToCheck = new Date(date.year, date.month - 1, date.day);
+    const start = new Date(startDate.year, startDate.month - 1, startDate.day);
+    
+    // Disable dates on or before start date
+    if (dateToCheck <= start) return true;
+    
+    // Check for overlap with existing work orders
+    return this.isDateOverlapping(date);
+  };
+
+  // Mark dates as disabled for start date picker (must be before end date)
+  markStartDateDisabled = (date: NgbDateStruct): boolean => {
+    const endDate = this.form.get('endDate')?.value;
+    if (!endDate) return false;
+    
+    const dateToCheck = new Date(date.year, date.month - 1, date.day);
+    const end = new Date(endDate.year, endDate.month - 1, endDate.day);
+    
+    // Disable dates on or after end date
+    if (dateToCheck >= end) return true;
+    
+    // Check for overlap with existing work orders
+    return this.isDateOverlapping(date);
+  };
+
+  private isDateOverlapping(date: NgbDateStruct): boolean {
+    const dateToCheck = new Date(date.year, date.month - 1, date.day).getTime();
+    
+    const workOrdersOnSameCenter = this.existingWorkOrders.filter(
+      wo => wo.data.workCenterId === this.workCenterId
+    );
+
+    for (const wo of workOrdersOnSameCenter) {
+      // Skip the current work order if editing
+      if (this.mode === 'edit' && this.workOrder && wo.docId === this.workOrder.docId) {
+        continue;
+      }
+
+      const existingStart = new Date(wo.data.startDate).getTime();
+      const existingEnd = new Date(wo.data.endDate).getTime();
+
+      // Check if date falls within existing work order range
+      if (dateToCheck >= existingStart && dateToCheck <= existingEnd) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  getDayTemplateData(field: 'startDate' | 'endDate'): (date: NgbDateStruct) => { selected: boolean; disabled: boolean; today: boolean } {
+    return (date: NgbDateStruct) => {
+      const currentValue = this.form.get(field)?.value;
+      const today = new Date();
+      
+      const isSelected = currentValue && 
+        date.year === currentValue.year && 
+        date.month === currentValue.month && 
+        date.day === currentValue.day;
+      
+      const isToday = date.year === today.getFullYear() && 
+        date.month === today.getMonth() + 1 && 
+        date.day === today.getDate();
+      
+      const isDisabled = field === 'endDate' 
+        ? this.markEndDateDisabled(date) 
+        : this.markStartDateDisabled(date);
+
+      return {
+        selected: isSelected,
+        disabled: isDisabled,
+        today: isToday
+      };
+    };
+  }
 }

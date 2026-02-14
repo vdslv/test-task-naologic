@@ -1,3 +1,15 @@
+<!-- Day template for datepicker -->
+<ng-template #dayTemplate let-date let-data="data">
+  <div 
+    class="custom-day"
+    [class.selected]="data?.selected"
+    [class.disabled]="data?.disabled"
+    [class.today]="data?.today"
+  >
+    {{ date.day }}
+  </div>
+</ng-template>
+
 @if (isOpen) {
   <div class="panel-backdrop" (click)="onBackdropClick($event)">
     <div class="panel-container" (click)="$event.stopPropagation()">
@@ -73,6 +85,9 @@
               (dateSelect)="onEndDateSelect($event)"
               navigation="select"
               [showWeekNumbers]="false"
+              [markDisabled]="markEndDateDisabled"
+              [dayTemplate]="dayTemplate"
+              [dayTemplateData]="getDayTemplateData('endDate')"
             />
           }
         </div>
@@ -99,6 +114,9 @@
               (dateSelect)="onStartDateSelect($event)"
               navigation="select"
               [showWeekNumbers]="false"
+              [markDisabled]="markStartDateDisabled"
+              [dayTemplate]="dayTemplate"
+              [dayTemplateData]="getDayTemplateData('startDate')"
             />
           }
         </div>
