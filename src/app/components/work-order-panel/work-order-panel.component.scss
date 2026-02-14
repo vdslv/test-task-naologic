@@ -26,7 +26,10 @@
 }
 
 .panel-subtitle {
-  @include text-label;
+  font-family: $font-nunito;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(104, 113, 150, 1);
   margin: 0;
 }
 

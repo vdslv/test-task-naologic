@@ -19,7 +19,7 @@
 
 @mixin text-label {
   font-family: $font-nunito;
-  font-size: $font-size-sm;
+  font-size: $font-size-md;
   font-weight: 400;
   color: $text-4-labels;
 }
@@ -109,7 +109,7 @@
   align-items: center;
   padding: 0 $padding-md;
   border-radius: $border-radius-md;
-  @include font-circular($font-size-base, 500);
+  @include font-circular($font-size-md, 500);
   cursor: pointer;
   transition: box-shadow $transition-normal;
   box-sizing: border-box;

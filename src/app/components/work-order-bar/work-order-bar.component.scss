@@ -26,7 +26,6 @@
 }
 
 .bar-name {
-  @include font-circular($font-size-base, 500);
   margin-right: $padding-sm;
   @include text-ellipsis;
   flex-shrink: 1;
