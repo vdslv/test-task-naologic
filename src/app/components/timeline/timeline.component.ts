@@ -1,4 +1,4 @@
-import { Component, computed, signal, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, signal, ViewChild, ElementRef, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -23,7 +23,7 @@ import { WorkOrderDocument } from '../../models/work-order.model';
   styleUrl: './timeline.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimelineComponent {
+export class TimelineComponent implements AfterViewInit {
   // ViewChild references for scroll synchronization
   @ViewChild('timelineHeader') timelineHeader!: ElementRef<HTMLDivElement>;
   @ViewChild('timelineContent') timelineContent!: ElementRef<HTMLDivElement>;
@@ -73,13 +73,20 @@ export class TimelineComponent {
     public timelineService: TimelineService
   ) {}
 
+  ngAfterViewInit(): void {
+    this.centerScroll();
+  }
+
   get currentTimescale(): TimescaleType {
     return this.timelineService.timescale();
   }
 
   set currentTimescale(value: TimescaleType) {
     this.timelineService.setTimescale(value);
-    // Center scroll position so user can scroll both directions
+    this.centerScroll();
+  }
+
+  private centerScroll(): void {
     requestAnimationFrame(() => {
       const content = this.timelineContent?.nativeElement;
       const header = this.timelineHeader?.nativeElement;
