@@ -132,6 +132,7 @@
     border-radius: $border-radius-lg;
     box-shadow: $shadow-md;
     background-color: $bg-white;
+    z-index: 1000;
   }
 
   .ngb-dp-header {
