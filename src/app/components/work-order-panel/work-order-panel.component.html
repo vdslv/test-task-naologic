@@ -62,6 +62,7 @@
               #startDatePicker="ngbDatepicker"
               [markDisabled]="markStartDateDisabled"
               navigation="select"
+              placement="top-start"
               (dateSelect)="onStartDateSelect($event)"
               (click)="startDatePicker.open()"
               readonly
@@ -86,6 +87,7 @@
               #endDatePicker="ngbDatepicker"
               [markDisabled]="markEndDateDisabled"
               navigation="select"
+              placement="top-start"
               (dateSelect)="onEndDateSelect($event)"
               (click)="endDatePicker.open()"
               readonly
