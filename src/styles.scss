@@ -7,9 +7,6 @@
 /* ng-select default theme */
 @import "@ng-select/ng-select/themes/default.theme.css";
 
-/* Import shared variables */
-@use 'app/styles/variables' as *;
-
 /* Reset and base styles */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -19,11 +16,11 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: $font-circular;
+  font-family: "CircularStd-Medium", "Circular-Std", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $bg-white;
-  color: $text-primary;
+  background-color: #FFFFFF;
+  color: rgba(3, 9, 41, 1);
 }
 
 /* Scrollbar styling */
@@ -33,15 +30,15 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  background: $bg-light;
-  border-radius: $border-radius-md;
+  background: #FAFBFC;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $text-6-disabled;
-  border-radius: $border-radius-md;
+  background: #D8DCEB;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: $text-4-labels;
+  background: #687196;
 }
