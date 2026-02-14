@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WorkOrderDocument, WorkOrderStatus } from '../../models';
@@ -18,7 +18,7 @@ export interface WorkOrderFormData {
 @Component({
   selector: 'app-work-order-panel',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, NgbDatepickerModule, StatusBadgeComponent, ButtonComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgSelectModule, NgbDatepickerModule, StatusBadgeComponent, ButtonComponent],
   templateUrl: './work-order-panel.component.html',
   styleUrl: './work-order-panel.component.scss'
 })
@@ -44,6 +44,8 @@ export class WorkOrderPanelComponent implements OnChanges {
   ];
 
   validationError: string = '';
+  showStartDatePicker: boolean = false;
+  showEndDatePicker: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -57,6 +59,8 @@ export class WorkOrderPanelComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isOpen'] && this.isOpen) {
       this.initializeForm();
+      this.showStartDatePicker = false;
+      this.showEndDatePicker = false;
     }
   }
 
@@ -198,5 +202,15 @@ export class WorkOrderPanelComponent implements OnChanges {
       case 'blocked': return 'status-blocked';
       default: return '';
     }
+  }
+
+  onStartDateSelect(date: NgbDateStruct): void {
+    this.form.patchValue({ startDate: date });
+    this.showStartDatePicker = false;
+  }
+
+  onEndDateSelect(date: NgbDateStruct): void {
+    this.form.patchValue({ endDate: date });
+    this.showEndDatePicker = false;
   }
 }

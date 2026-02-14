@@ -115,9 +115,41 @@
 
 // ngb-datepicker styling
 ::ng-deep {
+  ngb-datepicker {
+    border: 1px solid $border-color;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-md;
+  }
+
   .ngb-dp-header {
     background-color: $bg-light;
-    padding: $padding-sm;
+    padding: $padding-sm $padding-md;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .ngb-dp-navigation-select {
+    display: flex;
+    gap: $padding-sm;
+
+    select {
+      @include font-circular($font-size-md, 500);
+      color: $text-primary;
+      background-color: $bg-white;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-md;
+      padding: $padding-xs $padding-sm;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: $element-primary-3;
+      }
+    }
+  }
+
+  .ngb-dp-month-name {
+    @include font-circular($font-size-md, 500);
+    color: $text-primary;
   }
 
   .ngb-dp-weekday {
