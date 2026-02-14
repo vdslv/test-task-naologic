@@ -26,101 +26,98 @@
     </ng-select>
   </div>
 
-  <!-- Timeline Grid -->
+  <!-- Timeline Grid (CSS Grid: 2x2) -->
   <div class="timeline-grid">
-    <!-- Left Panel - Work Centers -->
-    <div class="work-centers-panel">
-      <div class="work-centers-header">
-        <span>Work Center</span>
-      </div>
-      <div class="work-centers-list">
-        @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
-          <div
-            class="work-center-row"
-            [class.hovered]="hoveredRowId() === workCenter.docId"
-            (mouseenter)="onRowMouseEnter(workCenter.docId)"
-            (mouseleave)="onRowMouseLeave()"
-          >
-            <span class="work-center-name">{{ workCenter.data.name }}</span>
-          </div>
-        }
-      </div>
+    <!-- Top-Left: Work Centers Header -->
+    <div class="work-centers-header">
+      <span>Work Center</span>
     </div>
 
-    <!-- Right Panel - Timeline -->
-    <div class="timeline-panel">
-      <!-- Scrollable timeline content (header + rows scroll together) -->
-      <div class="timeline-scroll-container">
-        <div class="timeline-content" [style.width.px]="totalWidth()">
-          <!-- Timeline Header -->
-          <div class="timeline-header-row">
-            @for (column of columns(); track trackByColumn($index, column)) {
-              <div
-                class="timeline-column-header"
-                [style.width.px]="timelineService.columnWidth()"
-              >
-                <span class="column-label">{{ column.label }}</span>
-              </div>
-            }
-          </div>
+    <!-- Top-Right: Timeline Header -->
+    <div class="timeline-header-row" #timelineHeader>
+      @for (column of columns(); track trackByColumn($index, column)) {
+        <div
+          class="timeline-column-header"
+          [style.width.px]="timelineService.columnWidth()"
+        >
+          <span class="column-label">{{ column.label }}</span>
+        </div>
+      }
+    </div>
 
-          <!-- Current Month Badge (positioned below header) -->
-          @if (currentPeriodBadgePosition() !== null) {
-            <div 
-              class="current-period-badge"
-              [style.left.px]="currentPeriodBadgePosition()"
+    <!-- Bottom-Left: Work Centers List -->
+    <div class="work-centers-list" #workCentersList>
+      @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
+        <div
+          class="work-center-row"
+          [class.hovered]="hoveredRowId() === workCenter.docId"
+          (mouseenter)="onRowMouseEnter(workCenter.docId)"
+          (mouseleave)="onRowMouseLeave()"
+        >
+          <span class="work-center-name">{{ workCenter.data.name }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Bottom-Right: Timeline Content -->
+    <div class="timeline-content" #timelineContent (scroll)="onTimelineScroll($event)">
+      <div class="timeline-inner" [style.width.px]="totalWidth()">
+        <!-- Current Month Badge -->
+        @if (currentPeriodBadgePosition() !== null) {
+          <div 
+            class="current-period-badge"
+            [style.left.px]="currentPeriodBadgePosition()"
+          >
+            Current month
+          </div>
+        }
+
+        <!-- Timeline Rows -->
+        <div class="timeline-rows">
+          @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
+            <div
+              class="timeline-row"
+              [class.hovered]="hoveredRowId() === workCenter.docId"
+              (mouseenter)="onRowMouseEnter(workCenter.docId)"
+              (mouseleave)="onRowMouseLeave()"
             >
-              Current month
+              <div
+                class="timeline-row-content"
+                (click)="onTimelineClick($event, workCenter)"
+                (mousemove)="onTimelineMouseMove($event, workCenter.docId)"
+                (mouseleave)="onTimelineMouseLeave()"
+              >
+                <!-- Grid columns -->
+                @for (column of columns(); track trackByColumn($index, column)) {
+                  <div
+                    class="timeline-cell"
+                    [style.width.px]="timelineService.columnWidth()"
+                  ></div>
+                }
+
+                <!-- Hover placeholder -->
+                @if (hoverPlaceholder() && hoverPlaceholder()!.workCenterId === workCenter.docId) {
+                  <div
+                    class="hover-placeholder"
+                    [style.left.px]="hoverPlaceholder()!.left"
+                    [style.width.px]="hoverPlaceholder()!.width"
+                  ></div>
+                }
+
+                <!-- Work Order Bars -->
+                @for (workOrder of getWorkOrdersForCenter(workCenter.docId); track trackByWorkOrder($index, workOrder)) {
+                  <app-work-order-bar
+                    [workOrder]="workOrder"
+                    [left]="getBarLeft(workOrder)"
+                    [width]="getBarWidth(workOrder)"
+                    (edit)="onEditWorkOrder($event)"
+                    (delete)="onDeleteWorkOrder($event)"
+                  />
+                }
+
+              </div>
             </div>
           }
-
-          <!-- Timeline Rows -->
-          <div class="timeline-rows">
-            @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
-              <div
-                class="timeline-row"
-                [class.hovered]="hoveredRowId() === workCenter.docId"
-                (mouseenter)="onRowMouseEnter(workCenter.docId)"
-                (mouseleave)="onRowMouseLeave()"
-              >
-                <div
-                  class="timeline-row-content"
-                  (click)="onTimelineClick($event, workCenter)"
-                  (mousemove)="onTimelineMouseMove($event, workCenter.docId)"
-                  (mouseleave)="onTimelineMouseLeave()"
-                >
-                  <!-- Grid columns -->
-                  @for (column of columns(); track trackByColumn($index, column)) {
-                    <div
-                      class="timeline-cell"
-                      [style.width.px]="timelineService.columnWidth()"
-                    ></div>
-                  }
-
-                  <!-- Hover placeholder -->
-                  @if (hoverPlaceholder() && hoverPlaceholder()!.workCenterId === workCenter.docId) {
-                    <div
-                      class="hover-placeholder"
-                      [style.left.px]="hoverPlaceholder()!.left"
-                      [style.width.px]="hoverPlaceholder()!.width"
-                    ></div>
-                  }
-
-                  <!-- Work Order Bars -->
-                  @for (workOrder of getWorkOrdersForCenter(workCenter.docId); track trackByWorkOrder($index, workOrder)) {
-                    <app-work-order-bar
-                      [workOrder]="workOrder"
-                      [left]="getBarLeft(workOrder)"
-                      [width]="getBarWidth(workOrder)"
-                      (edit)="onEditWorkOrder($event)"
-                      (delete)="onDeleteWorkOrder($event)"
-                    />
-                  }
-
-                </div>
-              </div>
-            }
-          </div>
         </div>
       </div>
     </div>

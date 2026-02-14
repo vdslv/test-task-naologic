@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -23,6 +23,11 @@ import { WorkOrderDocument } from '../../models/work-order.model';
   styleUrl: './timeline.component.scss'
 })
 export class TimelineComponent {
+  // ViewChild references for scroll synchronization
+  @ViewChild('timelineHeader') timelineHeader!: ElementRef<HTMLDivElement>;
+  @ViewChild('timelineContent') timelineContent!: ElementRef<HTMLDivElement>;
+  @ViewChild('workCentersList') workCentersList!: ElementRef<HTMLDivElement>;
+
   // Panel state
   isPanelOpen = signal(false);
   panelMode = signal<'create' | 'edit'>('create');
@@ -225,5 +230,19 @@ export class TimelineComponent {
 
   trackByColumn(index: number, column: TimelineColumn): string {
     return column.date.toISOString();
+  }
+
+  onTimelineScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    
+    // Sync horizontal scroll with header
+    if (this.timelineHeader?.nativeElement) {
+      this.timelineHeader.nativeElement.scrollLeft = target.scrollLeft;
+    }
+    
+    // Sync vertical scroll with work centers list
+    if (this.workCentersList?.nativeElement) {
+      this.workCentersList.nativeElement.scrollTop = target.scrollTop;
+    }
   }
 }

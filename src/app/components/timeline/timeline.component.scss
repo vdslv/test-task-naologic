@@ -105,34 +105,28 @@
   }
 }
 
-// Timeline Grid
+// Timeline Grid - CSS Grid layout
 .timeline-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: $work-centers-width 1fr;
+  grid-template-rows: $header-height 1fr;
   border-top: 1px solid $border-color;
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-// Work Centers Panel (Left)
-.work-centers-panel {
-  flex-shrink: 0;
-  width: $work-centers-width;
-  border-right: 1px solid $border-color;
-  background-color: $bg-white;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
+// Work Centers Header (Top-Left cell)
 .work-centers-header {
-  height: $header-height;
+  grid-row: 1;
+  grid-column: 1;
   padding: 0 $padding-xl;
   display: flex;
   align-items: center;
+  border-right: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
   background-color: $bg-light;
+  z-index: 20;
 
   span {
     @include text-label;
@@ -141,11 +135,14 @@
   }
 }
 
+// Work Centers List (Bottom-Left cell)
 .work-centers-list {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
+  grid-row: 2;
+  grid-column: 1;
+  border-right: 1px solid $border-color;
   background-color: $bg-white;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 .work-center-row {
@@ -160,36 +157,37 @@
   @include text-ellipsis;
 }
 
-// Timeline Panel (Right)
-.timeline-panel {
-  flex: 1;
-  min-width: 0;
+// Timeline Header (Top-Right cell)
+.timeline-header-row {
+  grid-row: 1;
+  grid-column: 2;
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  border-bottom: 1px solid $border-color;
+  background-color: $bg-light;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 15;
+
+  // Hide scrollbar but allow scrolling
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.timeline-scroll-container {
-  flex: 1;
-  overflow: auto;
-  min-height: 0;
-}
-
+// Timeline Content (Bottom-Right cell)
 .timeline-content {
+  grid-row: 2;
+  grid-column: 2;
+  overflow: auto;
+  position: relative;
+}
+
+.timeline-inner {
   display: flex;
   flex-direction: column;
   min-height: 100%;
   position: relative;
-}
-
-.timeline-header-row {
-  height: $header-height;
-  display: flex;
-  border-bottom: 1px solid $border-color;
-  background-color: $bg-light;
-  position: sticky;
-  top: 0;
-  z-index: 5;
 }
 
 .timeline-column-header {
@@ -205,7 +203,7 @@
 
 .current-period-badge {
   position: absolute;
-  top: $header-height;
+  top: 0;
   transform: translateX(-50%);
   height: 22px;
   display: flex;
@@ -228,6 +226,7 @@
 
 .timeline-rows {
   flex: 1;
+  min-height: 100%;
   background-color: rgba(247, 249, 252, 1);
 }
 
@@ -271,8 +270,8 @@
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .work-centers-panel {
-    width: $work-centers-width-mobile;
+  .timeline-grid {
+    grid-template-columns: $work-centers-width-mobile 1fr;
   }
 
   .timeline-title-section {
