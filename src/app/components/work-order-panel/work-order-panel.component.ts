@@ -61,6 +61,7 @@ export class WorkOrderPanelComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isOpen'] && this.isOpen) {
+      this.validationError = '';
       this.initializeForm();
     }
   }
