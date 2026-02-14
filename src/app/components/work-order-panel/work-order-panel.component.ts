@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, HostListener } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbDatepickerModule, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { CustomDateFormatter } from '../../shared/services/custom-date-formatter';
+import { DateUtilsService } from '../../services/date-utils.service';
 import { WorkOrderDocument, WorkOrderStatus } from '../../models';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
@@ -25,6 +26,8 @@ export interface WorkOrderFormData {
   styleUrl: './work-order-panel.component.scss'
 })
 export class WorkOrderPanelComponent implements OnChanges {
+  private dateUtils = inject(DateUtilsService);
+
   @Input() isOpen = false;
   @Input() mode: 'create' | 'edit' = 'create';
   @Input() workOrder: WorkOrderDocument | null = null;
@@ -84,28 +87,12 @@ export class WorkOrderPanelComponent implements OnChanges {
     }
   }
 
-  private parseDate(dateStr: string): NgbDateStruct {
-    const date = new Date(dateStr);
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      day: date.getDate()
-    };
+  private parseDate(dateString: string): NgbDateStruct | null {
+    return this.dateUtils.isoToNgbDate(dateString);
   }
 
   private formatDate(date: NgbDateStruct): string {
-    const year = date.year;
-    const month = date.month.toString().padStart(2, '0');
-    const day = date.day.toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
-  formatDisplayDate(date: NgbDateStruct | null): string {
-    if (!date) return '';
-    const day = date.day.toString().padStart(2, '0');
-    const month = date.month.toString().padStart(2, '0');
-    const year = date.year;
-    return `${day}.${month}.${year}`;
+    return this.dateUtils.ngbDateToISO(date);
   }
 
   onSubmit(): void {
@@ -181,16 +168,6 @@ export class WorkOrderPanelComponent implements OnChanges {
   onEscapeKey(): void {
     if (this.isOpen) {
       this.close.emit();
-    }
-  }
-
-  getStatusColor(status: WorkOrderStatus): string {
-    switch (status) {
-      case 'open': return 'status-open';
-      case 'in-progress': return 'status-in-progress';
-      case 'complete': return 'status-complete';
-      case 'blocked': return 'status-blocked';
-      default: return '';
     }
   }
 

@@ -17,10 +17,30 @@ $border-color: rgba(230, 235, 240, 1);
 $bg-light: #FAFBFC;
 $bg-white: #FFFFFF;
 
-// Status Colors - Task Bar Backgrounds
+// Status Colors - Complete color system for all status states
+// Open status
+$status-open-bg: rgba(228, 253, 255, 1);
+$status-open-text: rgba(62, 64, 219, 1);
+$status-open-bar-bg: rgba(228, 253, 255, 1);
+$status-open-bar-border: rgba(206, 251, 255, 1);
+
+// In Progress status
+$status-in-progress-bg: rgba(214, 216, 255, 1);
+$status-in-progress-text: rgba(62, 64, 219, 1);
 $status-in-progress-bar-bg: rgba(238, 240, 255, 1);
-$status-blocked-bar-bg: rgba(255, 252, 241, 1);
+$status-in-progress-bar-border: rgba(222, 224, 255, 1);
+
+// Complete status
+$status-complete-bg: rgba(225, 255, 204, 1);
+$status-complete-text: rgba(8, 162, 104, 1);
 $status-complete-bar-bg: rgba(248, 255, 243, 1);
+$status-complete-bar-border: rgba(209, 250, 179, 1);
+
+// Blocked status
+$status-blocked-bg: rgba(252, 238, 181, 1);
+$status-blocked-text: rgba(177, 54, 0, 1);
+$status-blocked-bar-bg: rgba(255, 252, 241, 1);
+$status-blocked-bar-border: rgba(255, 245, 207, 1);
 
 // Error Colors
 $error-bg: #fef2f2;

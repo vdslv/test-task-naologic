@@ -7,25 +7,25 @@
     z-index: 100;
   }
 
-  // Status-based colors with box-shadow borders
+  // Status-based colors with box-shadow borders (using variables)
   &.status-open {
-    @include work-order-bar-status($status-in-progress-bar-bg, $text-primary);
-    box-shadow: 0 0 0 1px rgba(206, 251, 255, 1);
+    @include work-order-bar-status($status-open-bar-bg, $text-primary);
+    box-shadow: 0 0 0 1px $status-open-bar-border;
   }
 
   &.status-in-progress {
     @include work-order-bar-status($status-in-progress-bar-bg, $text-primary);
-    box-shadow: 0 0 0 1px rgba(222, 224, 255, 1);
+    box-shadow: 0 0 0 1px $status-in-progress-bar-border;
   }
 
   &.status-complete {
     @include work-order-bar-status($status-complete-bar-bg, $text-primary);
-    box-shadow: 0 0 0 1px rgba(209, 250, 179, 1);
+    box-shadow: 0 0 0 1px $status-complete-bar-border;
   }
 
   &.status-blocked {
     @include work-order-bar-status($status-blocked-bar-bg, $text-primary);
-    box-shadow: 0 0 0 1px rgba(255, 245, 207, 1);
+    box-shadow: 0 0 0 1px $status-blocked-bar-border;
   }
 }
 

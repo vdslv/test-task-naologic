@@ -1,4 +1,5 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { DateUtilsService } from './date-utils.service';
 
 export type TimescaleType = 'day' | 'week' | 'month';
 
@@ -12,6 +13,8 @@ export interface TimelineColumn {
   providedIn: 'root'
 })
 export class TimelineService {
+  private dateUtils = inject(DateUtilsService);
+
   private timescaleSignal = signal<TimescaleType>('month');
   private viewStartDateSignal = signal<Date>(new Date());
   private viewEndDateSignal = signal<Date>(new Date());
@@ -261,73 +264,48 @@ export class TimelineService {
     return this.calculateBarLeft(today.toISOString().split('T')[0]);
   }
 
-  // Date utility methods
+  // Delegate to DateUtilsService for cleaner code
   private addDays(date: Date, days: number): Date {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
+    return this.dateUtils.addDays(date, days);
   }
 
   private daysBetween(start: Date, end: Date): number {
-    const msPerDay = 24 * 60 * 60 * 1000;
-    return Math.round((end.getTime() - start.getTime()) / msPerDay);
+    return this.dateUtils.daysBetween(start, end);
   }
 
   private monthsBetween(start: Date, end: Date): number {
-    return (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + (end.getDate() - 1) / 30;
+    return this.dateUtils.monthsBetween(start, end);
   }
 
   private getWeekStart(date: Date): Date {
-    const result = new Date(date);
-    const day = result.getDay();
-    const diff = result.getDate() - day + (day === 0 ? -6 : 1); // Monday as week start
-    result.setDate(diff);
-    return result;
+    return this.dateUtils.getWeekStart(date);
   }
 
   private isSameDay(date1: Date, date2: Date): boolean {
-    return date1.getFullYear() === date2.getFullYear() &&
-           date1.getMonth() === date2.getMonth() &&
-           date1.getDate() === date2.getDate();
+    return this.dateUtils.isSameDay(date1, date2);
   }
 
   private isSameMonth(date1: Date, date2: Date): boolean {
-    return date1.getFullYear() === date2.getFullYear() &&
-           date1.getMonth() === date2.getMonth();
+    return this.dateUtils.isSameMonth(date1, date2);
   }
 
   private isCurrentWeek(weekStart: Date, today: Date): boolean {
-    const weekEnd = this.addDays(weekStart, 6);
-    return today >= weekStart && today <= weekEnd;
+    return this.dateUtils.isInWeek(today, weekStart);
   }
 
   private formatDayLabel(date: Date): string {
-    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
-    return date.toLocaleDateString('en-US', options);
+    return this.dateUtils.formatDayLabel(date);
   }
 
   private formatWeekLabel(date: Date): string {
-    const weekEnd = this.addDays(date, 6);
-    const startStr = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-    const endStr = weekEnd.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-    return `${startStr} - ${endStr}`;
+    return this.dateUtils.formatWeekLabel(date);
   }
 
   private formatMonthLabel(date: Date): string {
-    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    return this.dateUtils.formatMonthLabel(date);
   }
 
-  // Format date to ISO string (YYYY-MM-DD)
   formatDateToISO(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
-
-  // Format date for display (DD.MM.YYYY)
-  formatDateForDisplay(dateStr: string): string {
-    const date = new Date(dateStr);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}.${month}.${year}`;
+    return this.dateUtils.dateToISO(date);
   }
 }

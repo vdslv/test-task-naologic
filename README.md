@@ -4,20 +4,26 @@ An interactive timeline component for a manufacturing ERP system that allows use
 
 ## Features
 
+### Core Features
 - **Timeline Grid**: Displays work orders across multiple work centers with Day/Week/Month zoom levels
 - **Work Order Bars**: Visual representation with status indicators (Open, In Progress, Complete, Blocked)
 - **Create/Edit Panel**: Slide-out panel with form validation for managing work orders
 - **Overlap Detection**: Prevents scheduling conflicts on the same work center
-- **localStorage Persistence**: Work orders survive page refresh (bonus feature)
-- **Keyboard Navigation**: Escape key to close panel (bonus feature)
-- **Today Button**: Quick navigation to current date (bonus feature)
-- **Smooth Animations**: Panel slide-in/out transitions (bonus feature)
+- **Three-dot Actions Menu**: Edit/Delete options for each work order
+
+### Bonus Features Implemented
+- **localStorage Persistence**: Work orders survive page refresh
+- **Infinite Scroll**: Dynamically loads more date columns as user scrolls left/right
+- **Keyboard Navigation**: Escape key to close panel
+- **Smooth Animations**: Panel slide-in/out transitions
+- **Custom Datepicker Styling**: Matches design system
+- **Click-to-Add Tooltip**: Shows hint when hovering over empty timeline area
 
 ## Tech Stack
 
-- **Angular 21** (standalone components)
+- **Angular 17+** (standalone components)
 - **TypeScript** (strict mode)
-- **SCSS** for styling
+- **SCSS** for styling with design system (variables, mixins)
 - **Reactive Forms** (FormGroup, FormControl, Validators)
 - **ng-select** for dropdown components
 - **@ng-bootstrap/ng-bootstrap** (ngb-datepicker) for date picking
@@ -57,17 +63,27 @@ Build artifacts will be stored in the `dist/` directory.
 ```
 src/app/
 ├── components/
-│   ├── timeline/                 # Main timeline grid component
-│   ├── work-order-bar/           # Individual work order bar component
+│   ├── timeline/                 # Main timeline grid component (CSS Grid layout)
+│   ├── work-order-bar/           # Individual work order bar with actions menu
 │   └── work-order-panel/         # Create/Edit slide-out panel
+├── shared/
+│   ├── components/
+│   │   ├── button/               # Reusable button component
+│   │   └── status-badge/         # Status badge component
+│   └── services/
+│       └── custom-date-formatter.ts  # NgbDatepicker formatter (MM.DD.YYYY)
 ├── models/
 │   ├── work-center.model.ts      # WorkCenter interface
 │   └── work-order.model.ts       # WorkOrder interface & status types
 ├── services/
-│   ├── timeline.service.ts       # Date calculations & timeline logic
-│   └── work-order.service.ts     # Data management & CRUD operations
+│   ├── date-utils.service.ts     # Centralized date operations
+│   ├── timeline.service.ts       # Timeline logic & infinite scroll
+│   └── work-order.service.ts     # CRUD operations & localStorage
+├── styles/
+│   ├── _variables.scss           # Design tokens (colors, spacing, etc.)
+│   └── _mixins.scss              # Reusable SCSS mixins
 └── data/
-    └── sample-data.ts            # Hardcoded sample data
+    └── sample-data.ts            # Hardcoded sample data (6 work centers, 8 orders)
 ```
 
 ## Architecture Decisions
@@ -79,12 +95,26 @@ All components are standalone for better tree-shaking and simpler imports.
 Using Angular Signals for reactive state management instead of RxJS BehaviorSubjects for simpler, more performant reactivity.
 
 ### Service Layer Separation
-- **TimelineService**: Handles all date calculations, column generation, and bar positioning
-- **WorkOrderService**: Manages work order CRUD operations, overlap detection, and localStorage persistence
+- **DateUtilsService**: Centralized date operations (formatting, conversion, arithmetic, comparison)
+- **TimelineService**: Timeline logic, column generation, bar positioning, infinite scroll
+- **WorkOrderService**: CRUD operations, overlap detection, localStorage persistence
+
+### Design System
+- **_variables.scss**: Single source of truth for colors, spacing, typography, z-index
+- **_mixins.scss**: Reusable SCSS patterns (forms, badges, tooltips, etc.)
+- Status colors consolidated in variables for consistency
+
+### CSS Grid Layout
+Timeline uses CSS Grid (2x2) for proper alignment:
+- Top-left: Work center header (fixed)
+- Top-right: Timeline header (synced horizontal scroll)
+- Bottom-left: Work center list (synced vertical scroll)
+- Bottom-right: Timeline content (scrolls both ways)
 
 ### Reusable Components
-- **WorkOrderBarComponent**: Reusable bar component with status styling and actions menu
-- **WorkOrderPanelComponent**: Single panel component handles both create and edit modes
+- **StatusBadgeComponent**: Shared badge with status colors
+- **ButtonComponent**: Reusable button with variants
+- **WorkOrderPanelComponent**: Single panel handles both create and edit modes
 
 ## Key Implementation Details
 
@@ -143,13 +173,25 @@ The application includes sample data with:
 ## Future Improvements (@upgrade)
 
 - [ ] Drag-and-drop to resize/move work orders
-- [ ] Infinite scroll for timeline (dynamically load more dates)
-- [ ] Tooltip on bar hover showing full details
+- [ ] Tooltip on bar hover showing full work order details
 - [ ] Unit tests with Jest
 - [ ] E2E tests with Playwright
 - [ ] Virtual scrolling for large datasets
 - [ ] Undo/redo functionality
 - [ ] Export to PDF/Excel
+- [ ] "Today" button to quickly center on current date
+- [ ] ARIA labels and focus management for accessibility
+
+## Demo Video
+
+[Loom video link here] - 5-10 minute walkthrough demonstrating:
+- Application running with sample data
+- All zoom levels (Day/Week/Month switching)
+- Creating a new work order
+- Editing an existing work order
+- Deleting a work order
+- Overlap error scenario
+- Code structure overview
 
 ## Author
 

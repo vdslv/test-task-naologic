@@ -12,24 +12,10 @@
   flex-shrink: 0;
   white-space: nowrap;
 
+  // Use centralized status colors from variables
+  @include status-badge-colors;
+
   &.status-open {
-    border: 1px solid rgba(206, 251, 255, 1);
-    background-color: rgba(228, 253, 255, 1);
-    color: rgba(62, 64, 219, 1);
-  }
-
-  &.status-in-progress {
-    background-color: rgba(214, 216, 255, 1);
-    color: rgba(62, 64, 219, 1);
-  }
-
-  &.status-complete {
-    background-color: rgba(225, 255, 204, 1);
-    color: rgba(8, 162, 104, 1);
-  }
-
-  &.status-blocked {
-    background-color: rgba(252, 238, 181, 1);
-    color: rgba(177, 54, 0, 1);
+    border: 1px solid $status-open-bar-border;
   }
 }
