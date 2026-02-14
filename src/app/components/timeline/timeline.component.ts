@@ -78,6 +78,24 @@ export class TimelineComponent {
 
   set currentTimescale(value: TimescaleType) {
     this.timelineService.setTimescale(value);
+    // Reset scroll and trigger infinite scroll to fill viewport
+    this.resetScrollAndFillViewport();
+  }
+
+  private resetScrollAndFillViewport(): void {
+    requestAnimationFrame(() => {
+      const content = this.timelineContent?.nativeElement;
+      const header = this.timelineHeader?.nativeElement;
+      if (content) {
+        // Reset scroll to beginning
+        content.scrollLeft = 0;
+        if (header) {
+          header.scrollLeft = 0;
+        }
+        // Trigger infinite scroll check to fill viewport
+        this.checkInfiniteScroll(content);
+      }
+    });
   }
 
   getWorkOrdersForCenter(workCenterId: string): WorkOrderDocument[] {
