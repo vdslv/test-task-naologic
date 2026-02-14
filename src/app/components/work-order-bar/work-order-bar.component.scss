@@ -3,6 +3,10 @@
 .work-order-bar {
   @include work-order-bar-base;
 
+  &.menu-open {
+    z-index: 100;
+  }
+
   // Status-based colors with box-shadow borders
   &.status-open {
     @include work-order-bar-status($status-in-progress-bar-bg, $text-primary);
@@ -71,7 +75,7 @@ app-status-badge {
   border: 1px solid $border-color;
   border-radius: $border-radius-lg;
   box-shadow: $shadow-lg;
-  z-index: 9999;
+  z-index: 10000;
   min-width: 120px;
   overflow: hidden;
 }

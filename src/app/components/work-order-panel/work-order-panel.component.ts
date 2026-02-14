@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, HostL
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { CustomDateFormatter } from '../../shared/services/custom-date-formatter';
 import { WorkOrderDocument, WorkOrderStatus } from '../../models';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
@@ -19,6 +20,7 @@ export interface WorkOrderFormData {
   selector: 'app-work-order-panel',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, NgSelectModule, NgbDatepickerModule, StatusBadgeComponent, ButtonComponent],
+  providers: [{ provide: NgbDateParserFormatter, useClass: CustomDateFormatter }],
   templateUrl: './work-order-panel.component.html',
   styleUrl: './work-order-panel.component.scss'
 })
@@ -155,8 +157,9 @@ export class WorkOrderPanelComponent implements OnChanges {
       const existingStart = new Date(wo.data.startDate).getTime();
       const existingEnd = new Date(wo.data.endDate).getTime();
 
-      // Check for overlap: new order overlaps if it starts before existing ends AND ends after existing starts
-      if (newStart < existingEnd && newEnd > existingStart) {
+      // Check for overlap: ranges overlap if they share any common time
+      // Two ranges [A, B] and [C, D] overlap if A <= D AND B >= C
+      if (newStart <= existingEnd && newEnd >= existingStart) {
         return `This time period overlaps with "${wo.data.name}" (${wo.data.startDate} - ${wo.data.endDate})`;
       }
     }
