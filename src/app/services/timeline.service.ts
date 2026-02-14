@@ -23,23 +23,11 @@ export class TimelineService {
   // Buffer columns to load when scrolling near edges
   private readonly BUFFER_COLUMNS = 6;
 
-  // Column width in pixels based on timescale
-  readonly columnWidth = computed(() => {
-    switch (this.timescaleSignal()) {
-      case 'day': return 120;
-      case 'week': return 100;
-      case 'month': return 100;
-    }
-  });
+  // Fixed column width in pixels
+  readonly columnWidth = () => 110;
 
-  // Number of columns to display based on timescale
-  readonly visibleColumns = computed(() => {
-    switch (this.timescaleSignal()) {
-      case 'day': return 30;    // ~1 month of days
-      case 'week': return 16;   // ~4 months of weeks
-      case 'month': return 12;  // 1 year of months
-    }
-  });
+  // Initial number of columns to display
+  private readonly INITIAL_COLUMNS = 12;
 
   constructor() {
     this.centerOnToday();
@@ -54,7 +42,7 @@ export class TimelineService {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const offset = Math.floor(this.visibleColumns() / 2);
+    const offset = Math.floor(this.INITIAL_COLUMNS / 2);
 
     switch (this.timescaleSignal()) {
       case 'day':
