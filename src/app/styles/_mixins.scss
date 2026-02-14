@@ -114,6 +114,7 @@
   transition: box-shadow $transition-normal;
   box-sizing: border-box;
   white-space: nowrap;
+  z-index: 10;
 
   &:hover {
     box-shadow: $shadow-sm;
@@ -283,15 +284,18 @@
 
 @mixin tooltip {
   position: fixed;
-  background-color: $text-primary;
-  color: #fff;
+  background-color: rgba(104, 113, 150, 1);
+  color: rgba(249, 250, 255, 1);
   padding: 6px $padding-md;
-  border-radius: $border-radius-md;
-  @include font-circular(12px, 500);
+  border-radius: 8px;
+  font-family: "CircularStd-Book", "Circular-Std", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
   pointer-events: none;
   z-index: $z-index-tooltip;
   white-space: nowrap;
-  box-shadow: $shadow-sm;
+  box-shadow: 0 2px 4px -2px rgba(200, 207, 233, 1),
+              0 0 16px -8px rgba(230, 235, 240, 1);
 }
 
 // =============================================================================

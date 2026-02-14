@@ -83,7 +83,11 @@
     }
 
     .ng-arrow-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding-right: $padding-sm;
+      height: 100%;
 
       .ng-arrow {
         border: none;
@@ -92,13 +96,13 @@
         border-left: 2px solid rgba(62, 64, 219, 1);
         border-bottom: 2px solid rgba(62, 64, 219, 1);
         transform: rotate(-45deg);
-        margin-top: -4px;
+        margin-top: -2px;
       }
     }
 
     &.ng-select-opened .ng-arrow-wrapper .ng-arrow {
       transform: rotate(135deg);
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     @include ng-select-dropdown-options;
