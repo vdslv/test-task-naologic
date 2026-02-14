@@ -29,11 +29,11 @@ export class TimelineService {
   // Fixed column width in pixels
   readonly columnWidth = () => 110;
 
-  // Get initial columns count based on timescale
+  // Get initial columns count based on timescale (fewer columns, load more on scroll)
   private getInitialColumns(): number {
     switch (this.timescaleSignal()) {
-      case 'day': return 30;    // ~1 month of days to fill wide screens
-      case 'week': return 20;   // ~5 months of weeks
+      case 'day': return 14;    // 2 weeks of days
+      case 'week': return 12;   // ~3 months of weeks
       case 'month': return 12;  // 1 year of months
     }
   }

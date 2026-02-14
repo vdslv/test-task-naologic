@@ -250,8 +250,8 @@ export class TimelineComponent {
     return column.date.toISOString();
   }
 
-  // Threshold in pixels to trigger loading more columns
-  private readonly SCROLL_THRESHOLD = 200;
+  // Threshold in pixels to trigger loading more columns (higher = trigger sooner)
+  private readonly SCROLL_THRESHOLD = 500;
   private isExpandingPast = false;
   private isExpandingFuture = false;
 
