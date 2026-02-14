@@ -1,9 +1,9 @@
 @if (isOpen) {
-  <div class="panel-backdrop" (click)="onBackdropClick($event)">
+  <div class="panel-backdrop" (click)="onBackdropClick($event)" role="dialog" aria-modal="true" aria-labelledby="panel-title">
     <div class="panel-container" (click)="$event.stopPropagation()">
       <div class="panel-header">
         <div class="panel-title-section">
-          <h2 class="panel-title">Work Order Details</h2>
+          <h2 class="panel-title" id="panel-title">Work Order Details</h2>
           <p class="panel-subtitle">Specify the dates, name and status for this order</p>
         </div>
         <div class="panel-actions">

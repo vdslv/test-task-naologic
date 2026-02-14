@@ -4,6 +4,8 @@
   [class.menu-open]="isMenuOpen"
   [style.left.px]="left"
   [style.width.px]="width"
+  role="listitem"
+  [attr.aria-label]="'Work order: ' + workOrder.data.name + ', Status: ' + statusLabel"
 >
   <span class="bar-name">{{ workOrder.data.name }}</span>
   <app-status-badge [status]="workOrder.data.status" />
@@ -25,13 +27,14 @@
     @if (isMenuOpen) {
       <div 
         class="dropdown-menu"
+        role="menu"
         [style.top.px]="dropdownPosition.top"
         [style.left.px]="dropdownPosition.left"
       >
-        <button class="dropdown-item" (click)="onEdit($event)">
+        <button class="dropdown-item" role="menuitem" aria-label="Edit work order" (click)="onEdit($event)">
           Edit
         </button>
-        <button class="dropdown-item dropdown-item-delete" (click)="onDelete($event)">
+        <button class="dropdown-item dropdown-item-delete" role="menuitem" aria-label="Delete work order" (click)="onDelete($event)">
           Delete
         </button>
       </div>

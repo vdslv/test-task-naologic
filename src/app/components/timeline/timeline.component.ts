@@ -1,4 +1,4 @@
-import { Component, computed, signal, ViewChild, ElementRef } from '@angular/core';
+import { Component, computed, signal, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -20,7 +20,8 @@ import { WorkOrderDocument } from '../../models/work-order.model';
     WorkOrderPanelComponent
   ],
   templateUrl: './timeline.component.html',
-  styleUrl: './timeline.component.scss'
+  styleUrl: './timeline.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimelineComponent {
   // ViewChild references for scroll synchronization
