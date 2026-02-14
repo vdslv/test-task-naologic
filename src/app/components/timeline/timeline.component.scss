@@ -38,18 +38,81 @@
 .timeline-controls {
   display: flex;
   align-items: center;
-  gap: $padding-sm;
   padding: $padding-lg $padding-xxl;
 }
 
 .timescale-label {
-  @include font-circular($font-size-md, 500);
-  color: $text-4-labels;
+  width: 75px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px 0 0 5px;
+  background-color: rgba(241, 243, 248, 0.75);
+  color: rgba(104, 113, 150, 1);
+  font-family: "CircularStd-Book", "Circular-Std", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
 }
 
 .timescale-select {
-  width: 100px;
-  @include ng-select-base;
+  width: 80px;
+
+  ::ng-deep {
+    .ng-select-container {
+      height: 25px;
+      min-height: 25px;
+      border-radius: 0 5px 5px 0;
+      background-color: $bg-white;
+      border: 1px solid $border-color;
+      border-left: none;
+
+      .ng-value-container {
+        padding-left: $padding-sm;
+
+        .ng-value {
+          color: rgba(62, 64, 219, 1);
+          font-family: "CircularStd-Medium", "Circular-Std", sans-serif;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .ng-arrow-wrapper {
+      padding-right: $padding-sm;
+
+      .ng-arrow {
+        border-color: rgba(62, 64, 219, 1) transparent transparent;
+        border-width: 5px 4px 0;
+      }
+    }
+
+    .ng-dropdown-panel {
+      border: 1px solid $border-color;
+      border-radius: $border-radius-lg;
+      box-shadow: $shadow-md;
+      margin-top: $padding-xs;
+
+      .ng-dropdown-panel-items {
+        .ng-option {
+          padding: 8px $padding-md;
+          font-family: "CircularStd-Medium", "Circular-Std", sans-serif;
+          font-size: 13px;
+          color: $text-primary;
+
+          &.ng-option-marked {
+            background-color: $bg-light;
+          }
+
+          &.ng-option-selected {
+            background-color: $hover-bg;
+            color: rgba(62, 64, 219, 1);
+          }
+        }
+      }
+    }
+  }
 }
 
 // Timeline Grid

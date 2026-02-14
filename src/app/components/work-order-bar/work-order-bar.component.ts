@@ -19,6 +19,7 @@ export class WorkOrderBarComponent {
 
   isMenuOpen = false;
   isHovered = false;
+  dropdownPosition = { top: 0, left: 0 };
 
   constructor(private elementRef: ElementRef) {}
 
@@ -38,6 +39,16 @@ export class WorkOrderBarComponent {
 
   toggleMenu(event: MouseEvent): void {
     event.stopPropagation();
+    
+    if (!this.isMenuOpen) {
+      const button = event.currentTarget as HTMLElement;
+      const rect = button.getBoundingClientRect();
+      this.dropdownPosition = {
+        top: rect.bottom + 4,
+        left: rect.right - 120 // 120px is min-width of dropdown
+      };
+    }
+    
     this.isMenuOpen = !this.isMenuOpen;
   }
 

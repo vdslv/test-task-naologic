@@ -22,7 +22,11 @@
     </button>
 
     @if (isMenuOpen) {
-      <div class="dropdown-menu">
+      <div 
+        class="dropdown-menu"
+        [style.top.px]="dropdownPosition.top"
+        [style.left.px]="dropdownPosition.left"
+      >
         <button class="dropdown-item" (click)="onEdit($event)">
           Edit
         </button>

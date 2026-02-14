@@ -36,6 +36,7 @@
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
+  margin-left: auto;
   font-family: "CircularStd-Book", "Circular-Std", sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -87,12 +88,14 @@
 }
 
 .dropdown-menu {
-  @include dropdown-menu;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: $padding-xs;
+  position: fixed;
+  background-color: $bg-white;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  z-index: 9999;
   min-width: 120px;
+  overflow: hidden;
 }
 
 .dropdown-item {
