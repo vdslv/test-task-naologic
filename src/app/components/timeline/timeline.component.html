@@ -49,75 +49,78 @@
 
     <!-- Right Panel - Timeline -->
     <div class="timeline-panel">
-      <!-- Timeline Header -->
-      <div class="timeline-header-row">
-        @for (column of columns(); track trackByColumn($index, column)) {
-          <div
-            class="timeline-column-header"
-            [style.width.px]="timelineService.columnWidth()"
-            [class.current-period]="column.isCurrentPeriod"
-          >
-            <span class="column-label">{{ column.label }}</span>
-            @if (column.isCurrentPeriod) {
-              <span class="current-period-badge">Current month</span>
+      <!-- Scrollable timeline content (header + rows scroll together) -->
+      <div class="timeline-scroll-container">
+        <div class="timeline-content" [style.width.px]="totalWidth()">
+          <!-- Timeline Header -->
+          <div class="timeline-header-row">
+            @for (column of columns(); track trackByColumn($index, column)) {
+              <div
+                class="timeline-column-header"
+                [style.width.px]="timelineService.columnWidth()"
+                [class.current-period]="column.isCurrentPeriod"
+              >
+                <span class="column-label">{{ column.label }}</span>
+                @if (column.isCurrentPeriod) {
+                  <span class="current-period-badge">Current month</span>
+                }
+              </div>
             }
           </div>
-        }
-      </div>
 
-      <!-- Timeline Rows -->
-      <div class="timeline-rows">
-        @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
-          <div
-            class="timeline-row"
-            [class.hovered]="hoveredRowId() === workCenter.docId"
-            (mouseenter)="onRowMouseEnter(workCenter.docId)"
-            (mouseleave)="onRowMouseLeave()"
-          >
-            <div
-              class="timeline-row-content"
-              [style.width.px]="totalWidth()"
-              (click)="onTimelineClick($event, workCenter)"
-              (mousemove)="onTimelineMouseMove($event, workCenter.docId)"
-              (mouseleave)="onTimelineMouseLeave()"
-            >
-              <!-- Grid columns -->
-              @for (column of columns(); track trackByColumn($index, column)) {
+          <!-- Timeline Rows -->
+          <div class="timeline-rows">
+            @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
+              <div
+                class="timeline-row"
+                [class.hovered]="hoveredRowId() === workCenter.docId"
+                (mouseenter)="onRowMouseEnter(workCenter.docId)"
+                (mouseleave)="onRowMouseLeave()"
+              >
                 <div
-                  class="timeline-cell"
-                  [style.width.px]="timelineService.columnWidth()"
-                  [class.current-period]="column.isCurrentPeriod"
-                ></div>
-              }
+                  class="timeline-row-content"
+                  (click)="onTimelineClick($event, workCenter)"
+                  (mousemove)="onTimelineMouseMove($event, workCenter.docId)"
+                  (mouseleave)="onTimelineMouseLeave()"
+                >
+                  <!-- Grid columns -->
+                  @for (column of columns(); track trackByColumn($index, column)) {
+                    <div
+                      class="timeline-cell"
+                      [style.width.px]="timelineService.columnWidth()"
+                      [class.current-period]="column.isCurrentPeriod"
+                    ></div>
+                  }
 
-              <!-- Hover placeholder -->
-              @if (hoverPlaceholder() && hoverPlaceholder()!.workCenterId === workCenter.docId) {
-                <div
-                  class="hover-placeholder"
-                  [style.left.px]="hoverPlaceholder()!.left"
-                  [style.width.px]="hoverPlaceholder()!.width"
-                ></div>
-              }
+                  <!-- Hover placeholder -->
+                  @if (hoverPlaceholder() && hoverPlaceholder()!.workCenterId === workCenter.docId) {
+                    <div
+                      class="hover-placeholder"
+                      [style.left.px]="hoverPlaceholder()!.left"
+                      [style.width.px]="hoverPlaceholder()!.width"
+                    ></div>
+                  }
 
-              <!-- Work Order Bars -->
-              @for (workOrder of getWorkOrdersForCenter(workCenter.docId); track trackByWorkOrder($index, workOrder)) {
-                <app-work-order-bar
-                  [workOrder]="workOrder"
-                  [left]="getBarLeft(workOrder)"
-                  [width]="getBarWidth(workOrder)"
-                  (edit)="onEditWorkOrder($event)"
-                  (delete)="onDeleteWorkOrder($event)"
-                />
-              }
+                  <!-- Work Order Bars -->
+                  @for (workOrder of getWorkOrdersForCenter(workCenter.docId); track trackByWorkOrder($index, workOrder)) {
+                    <app-work-order-bar
+                      [workOrder]="workOrder"
+                      [left]="getBarLeft(workOrder)"
+                      [width]="getBarWidth(workOrder)"
+                      (edit)="onEditWorkOrder($event)"
+                      (delete)="onDeleteWorkOrder($event)"
+                    />
+                  }
 
-              <!-- Today indicator line -->
-              @if (todayPosition() !== null && todayPosition()! >= 0 && todayPosition()! <= totalWidth()) {
-                <div class="today-indicator" [style.left.px]="todayPosition()"></div>
-              }
-            </div>
+                  <!-- Today indicator line -->
+                  @if (todayPosition() !== null && todayPosition()! >= 0 && todayPosition()! <= totalWidth()) {
+                    <div class="today-indicator" [style.left.px]="todayPosition()"></div>
+                  }
+                </div>
+              </div>
+            }
           </div>
-        }
-
+        </div>
       </div>
     </div>
   </div>
