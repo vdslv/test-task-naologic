@@ -1,0 +1,47 @@
+/* Circular Std Font */
+@import url('https://naologic-com-assets.naologic.com/fonts/circular-std/circular-std.css');
+
+/* Nunito Font for text-primary */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
+
+/* ng-select default theme */
+@import "@ng-select/ng-select/themes/default.theme.css";
+
+/* Import shared variables */
+@use 'app/styles/variables' as *;
+
+/* Reset and base styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: $font-circular;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $bg-white;
+  color: $text-primary;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-light;
+  border-radius: $border-radius-md;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $text-6-disabled;
+  border-radius: $border-radius-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $text-4-labels;
+}

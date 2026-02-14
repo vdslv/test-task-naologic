@@ -1,0 +1,136 @@
+<div class="timeline-container">
+  <!-- Header -->
+  <header class="timeline-header">
+    <div class="logo">
+      <span class="logo-nao">NAO</span><span class="logo-logic">LOGIC</span>
+    </div>
+  </header>
+
+  <!-- Title and Controls -->
+  <div class="timeline-title-section">
+    <h1 class="timeline-title">Work Orders</h1>
+    <div class="timeline-controls">
+      <span class="timescale-label">Timescale</span>
+      <ng-select
+        [(ngModel)]="currentTimescale"
+        [items]="timescaleOptions"
+        bindLabel="label"
+        bindValue="value"
+        [clearable]="false"
+        [searchable]="false"
+        class="timescale-select"
+      >
+      </ng-select>
+      <button class="today-button" (click)="goToToday()" title="Go to today">
+        Today
+      </button>
+    </div>
+  </div>
+
+  <!-- Timeline Grid -->
+  <div class="timeline-grid">
+    <!-- Left Panel - Work Centers -->
+    <div class="work-centers-panel">
+      <div class="work-centers-header">
+        <span>Work Center</span>
+      </div>
+      <div class="work-centers-list">
+        @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
+          <div
+            class="work-center-row"
+            [class.hovered]="hoveredRowId() === workCenter.docId"
+            (mouseenter)="onRowMouseEnter(workCenter.docId)"
+            (mouseleave)="onRowMouseLeave()"
+          >
+            <span class="work-center-name">{{ workCenter.data.name }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Right Panel - Timeline -->
+    <div class="timeline-panel" (mousemove)="onTimelineMouseMove($event)" (mouseleave)="onTimelineMouseLeave()">
+      <!-- Timeline Header -->
+      <div class="timeline-header-row">
+        @for (column of columns(); track trackByColumn($index, column)) {
+          <div
+            class="timeline-column-header"
+            [style.width.px]="timelineService.columnWidth()"
+            [class.current-period]="column.isCurrentPeriod"
+          >
+            @if (column.isCurrentPeriod) {
+              <span class="current-period-badge">Current {{ currentTimescale }}</span>
+            }
+            <span class="column-label">{{ column.label }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Timeline Rows -->
+      <div class="timeline-rows">
+        @for (workCenter of workOrderService.workCenters(); track trackByWorkCenter($index, workCenter)) {
+          <div
+            class="timeline-row"
+            [class.hovered]="hoveredRowId() === workCenter.docId"
+            (mouseenter)="onRowMouseEnter(workCenter.docId)"
+            (mouseleave)="onRowMouseLeave()"
+          >
+            <div
+              class="timeline-row-content"
+              [style.width.px]="totalWidth()"
+              (click)="onTimelineClick($event, workCenter)"
+            >
+              <!-- Grid columns -->
+              @for (column of columns(); track trackByColumn($index, column)) {
+                <div
+                  class="timeline-cell"
+                  [style.width.px]="timelineService.columnWidth()"
+                  [class.current-period]="column.isCurrentPeriod"
+                ></div>
+              }
+
+              <!-- Work Order Bars -->
+              @for (workOrder of getWorkOrdersForCenter(workCenter.docId); track trackByWorkOrder($index, workOrder)) {
+                <app-work-order-bar
+                  [workOrder]="workOrder"
+                  [left]="getBarLeft(workOrder)"
+                  [width]="getBarWidth(workOrder)"
+                  (edit)="onEditWorkOrder($event)"
+                  (delete)="onDeleteWorkOrder($event)"
+                />
+              }
+
+              <!-- Today indicator line -->
+              @if (todayPosition() !== null && todayPosition()! >= 0 && todayPosition()! <= totalWidth()) {
+                <div class="today-indicator" [style.left.px]="todayPosition()"></div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tooltip -->
+@if (showTooltip()) {
+  <div
+    class="click-tooltip"
+    [style.left.px]="tooltipPosition().x"
+    [style.top.px]="tooltipPosition().y"
+  >
+    Click to add dates
+  </div>
+}
+
+<!-- Work Order Panel -->
+<app-work-order-panel
+  [isOpen]="isPanelOpen()"
+  [mode]="panelMode()"
+  [workOrder]="selectedWorkOrder()"
+  [workCenterId]="selectedWorkCenterId()"
+  [initialStartDate]="initialStartDate()"
+  [errorMessage]="panelError()"
+  (close)="onPanelClose()"
+  (save)="onPanelSave($event)"
+/>

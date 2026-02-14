@@ -1,0 +1,218 @@
+@use '../../styles' as *;
+
+.timeline-container {
+  font-family: $font-circular;
+  min-height: 100vh;
+  background-color: $bg-white;
+}
+
+// Header
+.timeline-header {
+  padding: 20px $padding-xxl;
+  border-bottom: 1px solid $border-color;
+}
+
+.logo {
+  @include font-circular($font-size-md, 500);
+  letter-spacing: 2px;
+
+  .logo-nao {
+    color: $element-primary-3;
+  }
+
+  .logo-logic {
+    color: $text-4-labels;
+  }
+}
+
+// Title Section
+.timeline-title-section {
+  padding: $padding-xl $padding-xxl;
+  @include flex-between;
+}
+
+.timeline-title {
+  @include text-h3;
+}
+
+.timeline-controls {
+  display: flex;
+  align-items: center;
+  gap: $padding-md;
+}
+
+.timescale-label {
+  @include font-circular($font-size-md, 500);
+  color: $text-4-labels;
+}
+
+.timescale-select {
+  width: 120px;
+  @include ng-select-base;
+}
+
+.today-button {
+  @include btn-secondary;
+}
+
+// Timeline Grid
+.timeline-grid {
+  display: flex;
+  border-top: 1px solid $border-color;
+  overflow: hidden;
+}
+
+// Work Centers Panel (Left)
+.work-centers-panel {
+  flex-shrink: 0;
+  width: $work-centers-width;
+  border-right: 1px solid $border-color;
+  background-color: $bg-white;
+  z-index: 10;
+}
+
+.work-centers-header {
+  height: $header-height;
+  padding: 0 $padding-xl;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+  background-color: $bg-light;
+
+  span {
+    @include text-label;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.work-centers-list {
+  overflow-y: auto;
+}
+
+.work-center-row {
+  @include row-base;
+  padding: 0 $padding-xl;
+  @include row-hover;
+}
+
+.work-center-name {
+  @include text-primary;
+  @include text-ellipsis;
+}
+
+// Timeline Panel (Right)
+.timeline-panel {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.timeline-header-row {
+  height: $header-height;
+  display: flex;
+  border-bottom: 1px solid $border-color;
+  background-color: $bg-light;
+}
+
+.timeline-column-header {
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid $border-color;
+  position: relative;
+
+  &.current-period {
+    background-color: $status-current-period-bg;
+  }
+}
+
+.current-period-badge {
+  position: absolute;
+  top: $padding-xs;
+  @include font-circular($font-size-xs, 500);
+  color: $status-current-period-text;
+  background-color: $status-current-period-badge-bg;
+  padding: 2px $padding-sm;
+  border-radius: $border-radius-sm;
+  white-space: nowrap;
+}
+
+.column-label {
+  @include text-label;
+  white-space: nowrap;
+}
+
+.timeline-rows {
+  overflow-y: auto;
+}
+
+.timeline-row {
+  @include row-base;
+  overflow: visible;
+  @include row-hover;
+}
+
+.timeline-row-content {
+  height: 100%;
+  position: relative;
+  display: flex;
+  cursor: pointer;
+}
+
+.timeline-cell {
+  flex-shrink: 0;
+  height: 100%;
+  border-right: 1px solid $border-color;
+  box-sizing: border-box;
+
+  &.current-period {
+    background-color: rgba($status-current-period-bg, 0.5);
+  }
+}
+
+.today-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: $element-primary-3;
+  z-index: 5;
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -4px;
+    width: 10px;
+    height: 10px;
+    background-color: $element-primary-3;
+    border-radius: 50%;
+  }
+}
+
+// Click to add tooltip
+.click-tooltip {
+  @include tooltip;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .work-centers-panel {
+    width: $work-centers-width-mobile;
+  }
+
+  .timeline-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $padding-lg;
+  }
+
+  .timeline-controls {
+    width: 100%;
+  }
+}

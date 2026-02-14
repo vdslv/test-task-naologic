@@ -1,0 +1,95 @@
+@use '../../styles' as *;
+
+.work-order-bar {
+  @include work-order-bar-base;
+
+  // Status-based colors
+  &.status-open {
+    @include work-order-bar-status($element-primary-6, $text-primary);
+  }
+
+  &.status-in-progress {
+    @include work-order-bar-status($element-primary-6, $text-primary);
+  }
+
+  &.status-complete {
+    @include work-order-bar-status($status-complete-bg, $status-complete-text);
+  }
+
+  &.status-blocked {
+    @include work-order-bar-status($status-blocked-bg, $status-blocked-text);
+  }
+}
+
+.bar-name {
+  @include font-circular($font-size-base, 500);
+  margin-right: $padding-sm;
+  @include text-ellipsis;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.bar-status {
+  @include status-badge-base;
+
+  .status-open & {
+    @include status-open;
+  }
+
+  .status-in-progress & {
+    @include status-in-progress;
+  }
+
+  .status-complete & {
+    @include status-complete;
+  }
+
+  .status-blocked & {
+    @include status-blocked;
+  }
+}
+
+.menu-button {
+  position: absolute;
+  right: $padding-sm;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  @include flex-center;
+  background: transparent;
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity $transition-normal, background-color $transition-normal;
+  color: inherit;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.dropdown-menu {
+  @include dropdown-menu;
+  top: 100%;
+  right: 0;
+  margin-top: $padding-xs;
+  min-width: 120px;
+}
+
+.dropdown-item {
+  @include dropdown-item;
+
+  &.dropdown-item-delete {
+    color: $error-text;
+
+    &:hover {
+      background-color: $error-bg;
+    }
+  }
+}

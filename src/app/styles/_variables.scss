@@ -1,0 +1,108 @@
+// =============================================================================
+// DESIGN SYSTEM VARIABLES
+// =============================================================================
+
+// Primary Colors
+$primary-shade-2: #3E40DB;
+$element-primary-3: #5659FF;
+$element-primary-6: #AAAFFF;
+
+// Text Colors
+$text-primary: rgba(3, 9, 41, 1);
+$text-4-labels: #687196;
+$text-6-disabled: #D8DCEB;
+
+// Utility Colors
+$utility-stroke-2: #F0F1F5;
+$border-color: #F0F1F5;
+$bg-light: #FAFBFC;
+$bg-white: #FFFFFF;
+
+// Status Colors
+$status-complete-bg: #d1fae5;
+$status-complete-text: #065f46;
+$status-complete-badge: #10b981;
+
+$status-blocked-bg: #fef3c7;
+$status-blocked-text: #92400e;
+$status-blocked-badge: #f59e0b;
+
+$status-current-period-bg: #fffbeb;
+$status-current-period-text: #d97706;
+$status-current-period-badge-bg: #fef3c7;
+
+// Error Colors
+$error-bg: #fef2f2;
+$error-border: #fecaca;
+$error-text: #dc2626;
+
+// Hover Colors
+$hover-bg: #eef2ff;
+$hover-row-bg: #f0f4ff;
+
+// =============================================================================
+// TYPOGRAPHY
+// =============================================================================
+
+// Font Families
+$font-circular: "CircularStd-Medium", "Circular-Std", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-nunito: "Nunito", sans-serif;
+
+// Font Sizes
+$font-size-xs: 10px;
+$font-size-sm: 11.25px;
+$font-size-base: 13px;
+$font-size-md: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+
+// Line Heights
+$line-height-title: 34px;
+
+// =============================================================================
+// SPACING & SIZING
+// =============================================================================
+
+$row-height: 48px;
+$header-height: 48px;
+$panel-width: 400px;
+$work-centers-width: 220px;
+$work-centers-width-mobile: 160px;
+
+// Border Radius
+$border-radius-sm: 3px;
+$border-radius-md: 4px;
+$border-radius-lg: 6px;
+
+// Padding
+$padding-xs: 4px;
+$padding-sm: 8px;
+$padding-md: 12px;
+$padding-lg: 16px;
+$padding-xl: 24px;
+$padding-xxl: 32px;
+
+// =============================================================================
+// TRANSITIONS
+// =============================================================================
+
+$transition-fast: 0.15s ease;
+$transition-normal: 0.2s ease;
+$transition-slow: 0.3s ease-out;
+
+// =============================================================================
+// SHADOWS
+// =============================================================================
+
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+$shadow-panel: -4px 0 20px rgba(0, 0, 0, 0.1);
+
+// =============================================================================
+// Z-INDEX
+// =============================================================================
+
+$z-index-dropdown: 100;
+$z-index-tooltip: 1000;
+$z-index-panel: 1000;

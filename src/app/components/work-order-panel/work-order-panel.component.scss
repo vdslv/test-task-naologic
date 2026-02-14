@@ -1,0 +1,175 @@
+@use '../../styles' as *;
+
+.panel-backdrop {
+  @include panel-backdrop;
+}
+
+.panel-container {
+  @include panel-container;
+}
+
+.panel-header {
+  @include flex-between;
+  align-items: flex-start;
+  padding: $padding-xl $padding-xl 20px;
+  border-bottom: 1px solid $border-color;
+}
+
+.panel-title-section {
+  flex: 1;
+}
+
+.panel-title {
+  @include font-circular($font-size-lg, 500);
+  color: $text-primary;
+  margin: 0 0 $padding-xs 0;
+}
+
+.panel-subtitle {
+  @include text-label;
+  margin: 0;
+}
+
+.panel-actions {
+  display: flex;
+  gap: $padding-md;
+  align-items: center;
+}
+
+.btn-cancel {
+  @include btn-ghost;
+}
+
+.btn-create {
+  @include btn-primary;
+}
+
+.panel-form {
+  padding: $padding-xl;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.error-message {
+  background-color: $error-bg;
+  border: 1px solid $error-border;
+  border-radius: $border-radius-lg;
+  padding: $padding-md $padding-lg;
+  margin-bottom: 20px;
+  color: $error-text;
+  @include font-circular($font-size-base, 500);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  @include form-label;
+}
+
+.form-input {
+  @include form-input;
+}
+
+.date-input-wrapper {
+  position: relative;
+}
+
+.date-input {
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.date-picker-toggle {
+  position: absolute;
+  right: $padding-md;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: $padding-xs;
+  @include flex-center;
+}
+
+// ng-select custom styling
+.status-select {
+  @include ng-select-base;
+
+  ::ng-deep {
+    .ng-select-container {
+      .ng-value-container {
+        .ng-value {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: $padding-xs 10px;
+  border-radius: $border-radius-md;
+  @include font-circular(12px, 500);
+
+  &.status-open {
+    @include status-open;
+  }
+
+  &.status-in-progress {
+    @include status-in-progress;
+  }
+
+  &.status-complete {
+    @include status-complete;
+  }
+
+  &.status-blocked {
+    @include status-blocked;
+  }
+}
+
+.status-option {
+  @include font-circular($font-size-md, 500);
+}
+
+// ngb-datepicker styling
+::ng-deep {
+  .ngb-dp-header {
+    background-color: $bg-light;
+    padding: $padding-sm;
+  }
+
+  .ngb-dp-weekday {
+    color: $text-4-labels;
+    @include font-circular(12px, 500);
+  }
+
+  .ngb-dp-day {
+    .btn-light {
+      @include font-circular($font-size-base, 500);
+      border-radius: $border-radius-md;
+
+      &:hover {
+        background-color: $hover-bg;
+      }
+
+      &.bg-primary {
+        background-color: $element-primary-3 !important;
+      }
+    }
+  }
+
+  .ngb-dp-navigation-chevron {
+    color: $text-4-labels;
+  }
+
+  .ngb-dp-arrow-btn {
+    &:hover {
+      background-color: $hover-bg;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div
+  class="work-order-bar"
+  [ngClass]="statusClass"
+  [style.left.px]="left"
+  [style.width.px]="width"
+>
+  <span class="bar-name">{{ workOrder.data.name }}</span>
+  <span class="bar-status">{{ statusLabel }}</span>
+
+  <button
+    class="menu-button"
+    [class.visible]="isHovered || isMenuOpen"
+    (click)="toggleMenu($event)"
+    aria-label="Work order options"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+      <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+      <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+    </svg>
+  </button>
+
+  @if (isMenuOpen) {
+    <div class="dropdown-menu">
+      <button class="dropdown-item" (click)="onEdit($event)">
+        Edit
+      </button>
+      <button class="dropdown-item dropdown-item-delete" (click)="onDelete($event)">
+        Delete
+      </button>
+    </div>
+  }
+</div>
