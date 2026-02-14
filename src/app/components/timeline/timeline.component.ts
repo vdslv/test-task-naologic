@@ -38,6 +38,9 @@ export class TimelineComponent {
   showTooltip = signal(false);
   tooltipPosition = signal({ x: 0, y: 0 });
 
+  // Hover placeholder state
+  hoverPlaceholder = signal<{ workCenterId: string; left: number; width: number } | null>(null);
+
   // Timescale options for dropdown
   timescaleOptions: { value: TimescaleType; label: string }[] = [
     { value: 'day', label: 'Day' },
@@ -162,19 +165,41 @@ export class TimelineComponent {
     this.hoveredRowId.set(null);
   }
 
-  onTimelineMouseMove(event: MouseEvent): void {
+  onTimelineMouseMove(event: MouseEvent, workCenterId?: string): void {
     const target = event.target as HTMLElement;
-    // Only show tooltip when hovering over empty timeline area (not on work order bars)
+    // Only show tooltip and placeholder when hovering over empty timeline area (not on work order bars)
     if (!target.closest('.work-order-bar') && target.closest('.timeline-row-content')) {
       this.showTooltip.set(true);
       this.tooltipPosition.set({ x: event.clientX + 10, y: event.clientY - 30 });
+
+      // Calculate placeholder position
+      if (workCenterId) {
+        const container = target.closest('.timeline-row-content') as HTMLElement;
+        if (container) {
+          const rect = container.getBoundingClientRect();
+          const offsetX = event.clientX - rect.left + container.scrollLeft;
+          const columnWidth = this.timelineService.columnWidth();
+          // Snap to column and center the placeholder
+          const columnIndex = Math.floor(offsetX / columnWidth);
+          const placeholderWidth = columnWidth * 0.8; // 80% of column width
+          const left = columnIndex * columnWidth + (columnWidth - placeholderWidth) / 2;
+
+          this.hoverPlaceholder.set({
+            workCenterId,
+            left,
+            width: placeholderWidth
+          });
+        }
+      }
     } else {
       this.showTooltip.set(false);
+      this.hoverPlaceholder.set(null);
     }
   }
 
   onTimelineMouseLeave(): void {
     this.showTooltip.set(false);
+    this.hoverPlaceholder.set(null);
   }
 
   goToToday(): void {

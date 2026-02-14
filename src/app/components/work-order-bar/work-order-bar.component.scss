@@ -49,11 +49,13 @@
   }
 }
 
+.menu-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: $padding-sm;
+}
+
 .menu-button {
-  position: absolute;
-  right: $padding-sm;
-  top: 50%;
-  transform: translateY(-50%);
   width: 24px;
   height: 24px;
   @include flex-center;
@@ -61,10 +63,11 @@
   border: none;
   border-radius: $border-radius-md;
   cursor: pointer;
+  color: inherit;
   opacity: 0;
   transition: opacity $transition-normal, background-color $transition-normal;
-  color: inherit;
 
+  .work-order-bar:hover &,
   &.visible {
     opacity: 1;
   }
@@ -76,6 +79,7 @@
 
 .dropdown-menu {
   @include dropdown-menu;
+  position: absolute;
   top: 100%;
   right: 0;
   margin-top: $padding-xs;

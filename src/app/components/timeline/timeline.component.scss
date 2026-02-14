@@ -27,18 +27,19 @@
 
 // Title Section
 .timeline-title-section {
-  padding: $padding-xl $padding-xxl;
-  @include flex-between;
+  padding: $padding-xl $padding-xxl 0;
 }
 
 .timeline-title {
   @include text-h3;
 }
 
+// Timescale Controls - Left aligned
 .timeline-controls {
   display: flex;
   align-items: center;
-  gap: $padding-md;
+  gap: $padding-sm;
+  padding: $padding-lg $padding-xxl;
 }
 
 .timescale-label {
@@ -47,12 +48,8 @@
 }
 
 .timescale-select {
-  width: 120px;
+  width: 100px;
   @include ng-select-base;
-}
-
-.today-button {
-  @include btn-secondary;
 }
 
 // Timeline Grid
@@ -193,6 +190,17 @@
     background-color: $element-primary-3;
     border-radius: 50%;
   }
+}
+
+// Hover placeholder for empty timeline area
+.hover-placeholder {
+  position: absolute;
+  top: $padding-sm;
+  height: 32px;
+  background-color: rgba($element-primary-6, 0.5);
+  border: 2px dashed $element-primary-3;
+  border-radius: $border-radius-md;
+  pointer-events: none;
 }
 
 // Click to add tooltip

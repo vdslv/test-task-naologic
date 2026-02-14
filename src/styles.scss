@@ -1,6 +1,3 @@
-/* Import shared variables - @use must come first */
-@use 'app/styles/variables' as *;
-
 /* Circular Std Font */
 @import url('https://naologic-com-assets.naologic.com/fonts/circular-std/circular-std.css');
 
@@ -9,6 +6,9 @@
 
 /* ng-select default theme */
 @import "@ng-select/ng-select/themes/default.theme.css";
+
+/* Import shared variables */
+@use 'app/styles/variables' as *;
 
 /* Reset and base styles */
 *, *::before, *::after {

@@ -6,25 +6,24 @@
     </div>
   </header>
 
-  <!-- Title and Controls -->
+  <!-- Title -->
   <div class="timeline-title-section">
     <h1 class="timeline-title">Work Orders</h1>
-    <div class="timeline-controls">
-      <span class="timescale-label">Timescale</span>
-      <ng-select
-        [(ngModel)]="currentTimescale"
-        [items]="timescaleOptions"
-        bindLabel="label"
-        bindValue="value"
-        [clearable]="false"
-        [searchable]="false"
-        class="timescale-select"
-      >
-      </ng-select>
-      <button class="today-button" (click)="goToToday()" title="Go to today">
-        Today
-      </button>
-    </div>
+  </div>
+
+  <!-- Timescale Controls -->
+  <div class="timeline-controls">
+    <span class="timescale-label">Timescale</span>
+    <ng-select
+      [(ngModel)]="currentTimescale"
+      [items]="timescaleOptions"
+      bindLabel="label"
+      bindValue="value"
+      [clearable]="false"
+      [searchable]="false"
+      class="timescale-select"
+    >
+    </ng-select>
   </div>
 
   <!-- Timeline Grid -->
@@ -49,7 +48,7 @@
     </div>
 
     <!-- Right Panel - Timeline -->
-    <div class="timeline-panel" (mousemove)="onTimelineMouseMove($event)" (mouseleave)="onTimelineMouseLeave()">
+    <div class="timeline-panel">
       <!-- Timeline Header -->
       <div class="timeline-header-row">
         @for (column of columns(); track trackByColumn($index, column)) {
@@ -79,6 +78,8 @@
               class="timeline-row-content"
               [style.width.px]="totalWidth()"
               (click)="onTimelineClick($event, workCenter)"
+              (mousemove)="onTimelineMouseMove($event, workCenter.docId)"
+              (mouseleave)="onTimelineMouseLeave()"
             >
               <!-- Grid columns -->
               @for (column of columns(); track trackByColumn($index, column)) {
@@ -86,6 +87,15 @@
                   class="timeline-cell"
                   [style.width.px]="timelineService.columnWidth()"
                   [class.current-period]="column.isCurrentPeriod"
+                ></div>
+              }
+
+              <!-- Hover placeholder -->
+              @if (hoverPlaceholder() && hoverPlaceholder()!.workCenterId === workCenter.docId) {
+                <div
+                  class="hover-placeholder"
+                  [style.left.px]="hoverPlaceholder()!.left"
+                  [style.width.px]="hoverPlaceholder()!.width"
                 ></div>
               }
 
