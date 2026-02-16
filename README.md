@@ -14,20 +14,26 @@ An interactive timeline component for a manufacturing ERP system that allows use
 ### Bonus Features Implemented
 - **localStorage Persistence**: Work orders survive page refresh
 - **Infinite Scroll**: Dynamically loads more date columns as user scrolls left/right
+- **Centered Scroll**: Timeline starts centered so users can scroll both past and future
 - **Keyboard Navigation**: Escape key to close panel
 - **Smooth Animations**: Panel slide-in/out transitions
-- **Custom Datepicker Styling**: Matches design system
+- **Custom Datepicker Styling**: MM.DD.YYYY format matching design system
 - **Click-to-Add Tooltip**: Shows hint when hovering over empty timeline area
+
+### Performance & Accessibility
+- **OnPush Change Detection**: TimelineComponent uses OnPush for better performance
+- **trackBy Functions**: Optimized rendering for columns, work centers, and work orders
+- **ARIA Labels**: Dialog roles, menu roles, and descriptive labels for screen readers
+- **Signals**: Angular Signals for efficient reactive state management
 
 ## Tech Stack
 
-- **Angular 17+** (standalone components)
+- **Angular 21+** (standalone components, Signals)
 - **TypeScript** (strict mode)
-- **SCSS** for styling with design system (variables, mixins)
+- **SCSS** with design system (variables, mixins)
 - **Reactive Forms** (FormGroup, FormControl, Validators)
 - **ng-select** for dropdown components
-- **@ng-bootstrap/ng-bootstrap** (ngb-datepicker) for date picking
-- **Signals** for reactive state management
+- **@ng-bootstrap/ng-bootstrap** for date picking
 
 ## Getting Started
 
@@ -180,7 +186,7 @@ The application includes sample data with:
 - [ ] Undo/redo functionality
 - [ ] Export to PDF/Excel
 - [ ] "Today" button to quickly center on current date
-- [ ] ARIA labels and focus management for accessibility
+- [ ] Focus management improvements
 
 ## Demo Video
 
